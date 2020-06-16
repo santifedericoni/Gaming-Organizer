@@ -4,6 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Switch from '@material-ui/core/Switch';
@@ -41,15 +42,14 @@ const theme = createMuiTheme({
     },
   });
 
-export default function MenuAppBar() {
+export default function MenuAppBar(props) {
+    console.log('test',props.props)
+    console.log('test12312',props.setUserState)
+
   const classes = useStyles();
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -58,6 +58,15 @@ export default function MenuAppBar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  let handleSubmit = (e) => {
+    e.preventDefault();
+        props.props.setUserState({
+          userId: 0,
+          login:false,
+          mail:'',
+        })
+    }
 
   return (
     <div className={classes.root}>
@@ -83,10 +92,13 @@ export default function MenuAppBar() {
               >
                 <AccountCircle />
               </IconButton>
-              <FormControlLabel
-                 control={<Switch checked={auth} onChange={handleChange} aria-label="login switch" />}
-                 label={auth ? 'Logout' : 'Login'}
-                />
+              <Button to="/login"
+                  color="inherit"
+                  onClick={handleSubmit} >
+              <Link to ='/login' className = 'button'>
+                Logout
+              </Link>
+            </Button>
               <Menu
                 id="menu-appbar"
                 anchorEl={anchorEl}

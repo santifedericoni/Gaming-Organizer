@@ -57,7 +57,7 @@ const theme = createMuiTheme({
     },
   },
 });
-export default function SignUp() {
+export default function SignUp(props) {
   const classes = useStyles();
   const [form, setForm] = React.useState({
     name: '',
@@ -82,9 +82,11 @@ export default function SignUp() {
           }
           else {
             alert ('created')
-            localStorage.setItem('login', true);
-            localStorage.setItem('userName', res.data.user[0].lastName);
-            localStorage.setItem('userId', res.data.user[0].id);
+            props.setUserState({
+              userId: res.data.user[0].id,
+              login:true,
+              mail:res.data.user[0].email,
+            })
           }
         });
       }

@@ -5,15 +5,15 @@ import Log_in_bar from './logInBar'
 
 
 
-export default function ButtonAppBar() {
-  if (localStorage.getItem('login') !== 'true') {
+export default function ButtonAppBar(props) {
+  if (props.userState.login === false) {
   return (
-    <Log_out_bar/>
+    <Log_out_bar props={props}/>
   );
   }
   else {
     return (
-      <Log_in_bar/>
+      <Log_in_bar props={props}/>
     )
   }
 }

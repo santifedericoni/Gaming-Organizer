@@ -22,8 +22,9 @@ import {
     Link,
     Route,
     Switch,
+    
   } from 'react-router-dom';
-
+  import Profile from './profile'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -61,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     },
     });
 
-export default function SignIn() {
+export default function SignIn(props) {
   const classes = useStyles();
   const [form, setForm] = React.useState({
     email: '',
@@ -70,18 +71,20 @@ export default function SignIn() {
   let handleSubmit = (e) => {
     e.preventDefault();
     axios.post(`/api/user/login`, { form }).then((res) => {
-      console.log(res)
       if (res.data.user.length > 0) {
-        localStorage.setItem('login', true);
-        localStorage.setItem('userName', res.data.user[0].nick_name);
-        localStorage.setItem('userId', res.data.user[0].id);
-        // window.location = `/ShowCharacterByUser/`;
+        props.setUserState({
+          userId: res.data.user[0].id,
+          login:true,
+          mail:res.data.user[0].email,
+        })
       } else {
         alert('invalid data');
       }
     });
   };
 
+if (props.userState){
+  if (props.userState.login === false){
   return (
     <MuiThemeProvider theme={theme}>
     <Container component="main" maxWidth="xs">
@@ -140,4 +143,12 @@ export default function SignIn() {
     </Container>
     </MuiThemeProvider>
   );
+  }else {
+    return (
+      <Profile props={props}/>
+      );
+    }
+  }else {
+   return ( <h1>loading</h1>);
+  }
 }

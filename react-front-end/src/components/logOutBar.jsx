@@ -36,8 +36,10 @@ const theme = createMuiTheme({
   },
 });
 
-export default function ButtonAppBar() {
+export default function ButtonAppBar(props) {
   const classes = useStyles();
+  console.log(props)
+
   return (
     <div className={classes.root}>
       <MuiThemeProvider theme={theme}>
