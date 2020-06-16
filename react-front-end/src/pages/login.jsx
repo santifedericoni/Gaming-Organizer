@@ -16,7 +16,7 @@ import {
 import Container from '@material-ui/core/Container';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 import green from '@material-ui/core/colors/green';
-
+import axios from 'axios';
 import {
     BrowserRouter as Router,
     Link,
@@ -63,6 +63,24 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  const [form, setForm] = React.useState({
+    email: '',
+    password: '',
+  });
+  let handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post(`/api/user/login`, { form }).then((res) => {
+      console.log(res)
+      if (res.data.user.length > 0) {
+        localStorage.setItem('login', true);
+        localStorage.setItem('userName', res.data.user[0].nick_name);
+        localStorage.setItem('userId', res.data.user[0].id);
+        // window.location = `/ShowCharacterByUser/`;
+      } else {
+        alert('invalid data');
+      }
+    });
+  };
 
   return (
     <MuiThemeProvider theme={theme}>
@@ -75,7 +93,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -83,6 +101,8 @@ export default function SignIn() {
             fullWidth
             id="email"
             label="Email Address"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
             name="email"
             autoComplete="email"
             autoFocus
@@ -97,6 +117,7 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
           />
           <Button
             type="submit"
