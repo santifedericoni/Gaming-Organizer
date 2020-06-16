@@ -11,6 +11,12 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import {
+    BrowserRouter as Router,
+    Link,
+    Route,
+
+  } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,7 +70,7 @@ export default function MenuAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Photos
+          Game Organizer
           </Typography>
           {auth && (
             <div>
@@ -96,7 +102,9 @@ export default function MenuAppBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>
+                    <Link to='/profile'>Profile</Link>
+                    </MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
               </Menu>
             </div>

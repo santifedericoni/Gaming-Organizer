@@ -3,6 +3,7 @@ import './App.css';
 import MainPage from './pages/home';
 import Login from './pages/login'
 import SignIn from './pages/signIn'
+import Profile from './pages/profile'
 
 import AppBar from './components/navbar'
 
@@ -24,7 +25,7 @@ export default function App (){
         <Route exact path="/" component={MainPage} />
         <Route exact path="/login"> <Login /></Route>
         <Route exact path="/signIn"> <SignIn /></Route>
-
+        <Route exact path="/profile"> <Profile /></Route>
       </Switch>
       </body>
     </Router>

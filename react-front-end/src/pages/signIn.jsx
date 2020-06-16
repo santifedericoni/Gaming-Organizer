@@ -82,9 +82,9 @@ export default function SignUp() {
           }
           else {
             alert ('created')
-            // localStorage.setItem('login', true);
-            // localStorage.setItem('userName', res.data.user[0].lastName);
-            // localStorage.setItem('userId', res.data.user[0].id);
+            localStorage.setItem('login', true);
+            localStorage.setItem('userName', res.data.user[0].lastName);
+            localStorage.setItem('userId', res.data.user[0].id);
           }
         });
       }
