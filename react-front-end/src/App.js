@@ -1,38 +1,32 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React from 'react';
 import './App.css';
+import MainPage from './pages/home';
+import Login from './pages/login'
+import SignIn from './pages/signIn'
 
-class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      message: 'Click the button to load data!'
-    }
-  }
+import AppBar from './components/navbar'
 
-  fetchData = () => {
-    axios.get('/api/data') // You can simply make your requests to "/api/whatever you want"
-    .then((response) => {
-      // handle success
-      console.log(response.data) // The entire response from the Rails API
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
 
-      console.log(response.data.message) // Just the message
-      this.setState({
-        message: response.data.message
-      });
-    }) 
-  }
+export default function App (){
 
-  render() {
+
     return (
-      <div className="App">
-        <h1>{ this.state.message }</h1>
-        <button onClick={this.fetchData} >
-          Fetch Data
-        </button>        
-      </div>
-    );
-  }
-}
+      <Router>
+      <AppBar />
+      <body >
+        <Switch>
+        <Route exact path="/" component={MainPage} />
+        <Route exact path="/login"> <Login /></Route>
+        <Route exact path="/signIn"> <SignIn /></Route>
 
-export default App;
+      </Switch>
+      </body>
+    </Router>
+  );
+}

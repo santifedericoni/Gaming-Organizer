@@ -23,11 +23,23 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.button {
+  /* background-color:#1a473a; */
+  padding: 5px;
+  color: white
+}
+
+.form {
+  display: flex;
+  align-content: center;
+}
+
+.login {
+  display: flex;
+  align-content: center;
+  margin-left: 30%;
+}
+
+.submit {
+  background-color: #282c34;
 }
