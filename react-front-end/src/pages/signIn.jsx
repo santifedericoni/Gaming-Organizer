@@ -15,6 +15,7 @@ import {
 import Container from '@material-ui/core/Container';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 import green from '@material-ui/core/colors/green';
+import axios from 'axios';
 
 import {
   BrowserRouter as Router,
@@ -58,7 +59,38 @@ const theme = createMuiTheme({
 });
 export default function SignUp() {
   const classes = useStyles();
+  const [form, setForm] = React.useState({
+    name: '',
+    lastName: '',
+    email: '',
+    password: '',
+  });
 
+  let save = (e) => {
+    e.preventDefault();
+    axios.post(`/api/user/login`, { form }).then((res) => {
+      if (res.data.user.length > 0){
+        alert ('user already exist')
+      } else {
+        if (form.name === '' || form.lastName === '' || form.email === '' || form.password === '' ){
+          alert ('all values are requieres')
+        }
+        else {
+        axios.post(`/api/user`, { form }).then((res) => {
+          if (res.status === 500){
+            alert ('error')
+          }
+          else {
+            alert ('created')
+          }
+      // localStorage.setItem('login', true);
+          // localStorage.setItem('userName', res.data.user[0].lastName);
+          // localStorage.setItem('userId', res.data.user[0].id);
+        });
+      }
+      }
+    })
+  };
   return (
     <MuiThemeProvider theme={theme}>
     <Container component="main" maxWidth="xs">
@@ -70,7 +102,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={save}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -82,6 +114,8 @@ export default function SignUp() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -93,6 +127,10 @@ export default function SignUp() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
+                value={form.lastName}
+                onChange={(e) =>
+                  setForm({ ...form, lastName: e.target.value })
+                }
               />
             </Grid>
             <Grid item xs={12}>
@@ -104,6 +142,8 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
               />
             </Grid>
             <Grid item xs={12}>
@@ -116,6 +156,10 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={form.password}
+                onChange={(e) =>
+                  setForm({ ...form, password: e.target.value })
+                }
               />
             </Grid>
           </Grid>

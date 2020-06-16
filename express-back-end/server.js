@@ -2,11 +2,14 @@ require('dotenv').config();
 const Express = require('express');
 const App = Express();
 const BodyParser = require('body-parser');
+const db = require('./db/index');
 const PORT = 8080;
 
 // Express Configuration
+// App.use(cors());
 App.use(BodyParser.urlencoded({ extended: false }));
 App.use(Express.static('public'));
+App.use(BodyParser.json());
 
 // Sample GET route
 App.get('/api/data', (req, res) => res.json({
@@ -17,3 +20,6 @@ App.listen(PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`Express seems to be listening on port ${PORT} so that's pretty good 👍`);
 });
+
+const usersQueries = require('./db/routes/user');
+App.use('/api/user', usersQueries(db));
