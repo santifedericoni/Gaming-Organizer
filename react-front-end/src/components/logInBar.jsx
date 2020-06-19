@@ -43,9 +43,6 @@ const theme = createMuiTheme({
   });
 
 export default function MenuAppBar(props) {
-    console.log('test',props.props)
-    console.log('test12312',props.setUserState)
-
   const classes = useStyles();
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);

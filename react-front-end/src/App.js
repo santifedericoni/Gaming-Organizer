@@ -16,6 +16,8 @@ import {
 
 export default function App (){
   const [userState, setUserState] = useState({
+    name: '',
+    lastName:'',
     userId:0,
     login:false,
     mail:'',

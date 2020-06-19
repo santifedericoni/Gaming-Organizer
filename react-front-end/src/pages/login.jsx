@@ -73,6 +73,8 @@ export default function SignIn(props) {
     axios.post(`/api/user/login`, { form }).then((res) => {
       if (res.data.user.length > 0) {
         props.setUserState({
+          name: res.data.user[0].name,
+          lastName: res.data.user[0].lastname,
           userId: res.data.user[0].id,
           login:true,
           mail:res.data.user[0].email,
