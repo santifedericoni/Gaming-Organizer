@@ -70,16 +70,12 @@ export default function SignUp(props) {
 
   let save = (e) => {
     e.preventDefault();
-    axios.post(`/api/user/${props.props.userState.userId}`, { form }).then((res) => {
-
-      if (res.data.user.length > 0){
-        alert ('user already exist')
-      } else {
+    axios.post(`/api/user/login`, { form }).then((res) => {
         if (form.name === '' || form.lastName === '' || form.email === '' || form.password === '' ){
           alert ('all values are requieres')
         }
         else {
-        axios.post(`/api/user/edit`, { form }).then((res) => {
+        axios.post(`/api/user/${props.props.userState.userId}`, { form }).then((res) => {
           if (res.status === 500){
             alert ('error')
           }
@@ -91,7 +87,6 @@ export default function SignUp(props) {
             })
           }
         });
-      }
       }
     })
   };
