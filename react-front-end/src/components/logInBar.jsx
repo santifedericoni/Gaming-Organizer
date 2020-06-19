@@ -87,6 +87,7 @@ export default function MenuAppBar(props) {
                 onClick={handleMenu}
                 color="inherit"
               >
+                {/* {props.props.userState.mail} */}
                 <AccountCircle />
               </IconButton>
               <Button to="/login"
