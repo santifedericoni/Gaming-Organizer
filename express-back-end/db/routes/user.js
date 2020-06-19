@@ -42,22 +42,22 @@ module.exports = (db) => {
       });
   });
 
-  // router.post('/:user_id', (req, res) => {
-  //   const values = [Number(req.params.poll_id)];
-  //   console.log(values);
-  //   let query = `
-  //       UPDATE users
-  //       SET completed = TRUE
-  //       WHERE id = $1;
-  //       `;
-  //   db.query(query, values)
-  //     .then(() => {
-  //       res.send('hi user');
-  //     })
-  //     .catch((err) => {
-  //       res.status(500).json({ error: err.message });
-  //     });
-  // });
+  router.post('/:user_id', (req, res) => {
+    const values = [req.params.user_id, req.body.form.name, req.body.form.lastName, req.body.form.email, req.body.form.password ];
+    let query = `
+        UPDATE users
+        SET name = $2, lastname  = $3, email=$4, password =$5
+        WHERE id = $1;
+        `;
+    db.query(query, values)
+      .then(() => {
+        res.send('hi user');
+      })
+      .catch((err) => {
+        console.log('error',err)
+        res.status(500).json({ error: err.message });
+      });
+  });
 
   return router;
 };

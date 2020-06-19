@@ -62,15 +62,16 @@ export default function SignUp(props) {
   const classes = useStyles();
   console.log('profile props',props.props.userState)
   const [form, setForm] = React.useState({
-    name: '',
-    lastName: '',
-    email: '',
+    name: props.props.userState.name,
+    lastName: props.props.userState.lastName,
+    email: props.props.userState.mail,
     password: '',
   });
 
   let save = (e) => {
     e.preventDefault();
-    axios.post(`/api/user/login`, { form }).then((res) => {
+    axios.post(`/api/user/${props.props.userState.userId}`, { form }).then((res) => {
+
       if (res.data.user.length > 0){
         alert ('user already exist')
       } else {
@@ -78,12 +79,12 @@ export default function SignUp(props) {
           alert ('all values are requieres')
         }
         else {
-        axios.post(`/api/user`, { form }).then((res) => {
+        axios.post(`/api/user/edit`, { form }).then((res) => {
           if (res.status === 500){
             alert ('error')
           }
           else {
-            props.setUserState({
+            props.props.setUserState({
               userId: res.data.user[0].id,
               login:true,
               mail:res.data.user[0].email,
@@ -118,7 +119,7 @@ export default function SignUp(props) {
                     id="firstName"
                     label="First Name"
                     autoFocus
-                    value={props.props.userState.name}
+                    value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                   />
                 </Grid>
@@ -131,7 +132,7 @@ export default function SignUp(props) {
                     label="Last Name"
                     name="lastName"
                     autoComplete="lname"
-                    value={props.props.userState.lastName}
+                    value={form.lastName}
                     onChange={(e) =>
                       setForm({ ...form, lastName: e.target.value })
                     }
@@ -146,7 +147,7 @@ export default function SignUp(props) {
                     label="Email Address"
                     name="email"
                     autoComplete="email"
-                    value={props.props.userState.mail}
+                    value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                   />
                 </Grid>
