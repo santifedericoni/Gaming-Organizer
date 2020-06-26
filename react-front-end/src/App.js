@@ -5,6 +5,8 @@ import Login from './pages/login'
 import SignIn from './pages/signIn'
 import Profile from './pages/profile'
 import Platforms from './pages/platforms'
+import Games from './pages/addGames'
+import Search from './pages/search'
 
 import AppBar from './components/navbar'
 
@@ -34,6 +36,9 @@ export default function App (){
         <Route exact path="/signIn"> <SignIn userState={userState} setUserState={setUserState}/></Route>
         <Route exact path="/profile"> <Profile userState={userState} setUserState={setUserState}/></Route>
         <Route exact path="/platforms"> <Platforms userState={userState} setUserState={setUserState}/></Route>
+        <Route exact path="/games"> <Games userState={userState} setUserState={setUserState}/></Route>
+        <Route exact path="/search"> <Search userState={userState} setUserState={setUserState}/></Route>
+
 
       </Switch>
       </body>

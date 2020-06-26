@@ -8,6 +8,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Container } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,10 +23,10 @@ const useStyles = makeStyles((theme) => ({
   export default function CheckboxesGroup(props) {
     const classes = useStyles();
     const [state, setState] = React.useState({
-      PS4: true,
-      Xbox_one: false,
-      Switch: false,
-      PC: false,
+      PS4: '',
+      Xbox_one: '',
+      Switch: '',
+      PC: '',
     });
   
     const handleChange = (event) => {
@@ -33,7 +34,10 @@ const useStyles = makeStyles((theme) => ({
     };
   
     const { PS4, Xbox_one, Switch, PC } = state;
-    const error = [PS4, Xbox_one, Switch, PC].filter((v) => v).length !== 2;
+    // const error = [PS4, Xbox_one, Switch, PC].filter((v) => v).length !== 2;
+
+
+
  
 console.log('props platforms',state)
 if (props.userState){
@@ -71,6 +75,15 @@ if (props.userState){
           </FormControl>
           </Grid>
         </div>
+        <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Sign Up
+              </Button>
         </Container>
 
       );
