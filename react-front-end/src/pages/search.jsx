@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import useDebounce from './use-debounce';
+import {
+    BrowserRouter as Router,
+    Link,
+    Route,
+    Switch,
+  } from 'react-router-dom';
 
 export default function app(props) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -7,8 +13,8 @@ export default function app(props) {
   const [isSearching, setIsSearching] = useState(false);
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
-    console.log('resultados',results)
-    console.log('searchTerm',searchTerm)
+     console.log('resultados',results)
+    
 
   useEffect(
     () => {
@@ -34,10 +40,12 @@ export default function app(props) {
       {isSearching && <div>Searching ...</div>}
       {results.map(result => (
         <div key={result.id}>
-          <h4>{result.name}</h4>
-          <img width="900" height="600"
-            src={`${result.short_screenshots[0].image}`}
+          <h2>{result.name}</h2>
+          <Link to = '/login'>
+          <img width="400" height="200"
+            src={`${result.background_image}`}
           />
+          </Link>
         </div>
       ))}
     </div>
@@ -45,7 +53,6 @@ export default function app(props) {
 }
 
 function searchCharacters(search) {
-//   const apiKey = 'f9dfb1e8d466d36c27850bedd2047687';
   const queryString = `${search}`;
   return fetch(
     `https://api.rawg.io/api/games?search=${queryString}`,
