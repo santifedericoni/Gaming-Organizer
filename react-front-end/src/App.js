@@ -7,6 +7,7 @@ import Profile from './pages/profile'
 import Platforms from './pages/platforms'
 import Games from './pages/addGames'
 import Search from './pages/search'
+import Game from './pages/game'
 
 import AppBar from './components/navbar'
 
@@ -26,6 +27,10 @@ export default function App (){
     mail:'',
   });
 
+  const [gameState, setGameState] = useState({
+    name: 'monkey-island-2-lechucks-revenge',
+  });
+
     return (
       <Router>
       <AppBar userState={userState} setUserState={setUserState} />
@@ -37,7 +42,8 @@ export default function App (){
         <Route exact path="/profile"> <Profile userState={userState} setUserState={setUserState}/></Route>
         <Route exact path="/platforms"> <Platforms userState={userState} setUserState={setUserState}/></Route>
         <Route exact path="/games"> <Games userState={userState} setUserState={setUserState}/></Route>
-        <Route exact path="/search"> <Search userState={userState} setUserState={setUserState}/></Route>
+        <Route exact path="/search"> <Search userState={userState} setUserState={setUserState} gameState={gameState} setGameState={setGameState}/></Route>
+        <Route exact path="/game"> <Game userState={userState} setUserState={setUserState} gameState={gameState} setGameState={setGameState}/></Route>
 
 
       </Switch>

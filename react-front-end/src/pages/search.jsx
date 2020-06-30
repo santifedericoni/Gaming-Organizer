@@ -6,21 +6,64 @@ import {
     Route,
     Switch,
   } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
+import { Container, Button } from '@material-ui/core';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
+import green from '@material-ui/core/colors/green';
+import {
+  makeStyles,
+  createMuiTheme,
+  MuiThemeProvider
+} from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: '#064E40',
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#1B4D3E',
+    },
+    secondary: {
+      main: '#7986cb',
+    },
+  },
+});
+
 
 export default function app(props) {
+  const classes = useStyles();
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
-
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
-     console.log('resultados',results)
     
-
+  const updateGame = function (slug) {
+    console.log('slug',slug)
+  }
   useEffect(
     () => {
       if (debouncedSearchTerm) {
         setIsSearching(true);
-        searchCharacters(debouncedSearchTerm).then(results => {
+        searchGame(debouncedSearchTerm).then(results => {
           setIsSearching(false);
           setResults(results);
         });
@@ -31,28 +74,39 @@ export default function app(props) {
     [debouncedSearchTerm]
   );
   return (
-    <div>
-      <input
-        placeholder="Search a Game"
-        onChange={e => setSearchTerm(e.target.value)}
-      />
-
-      {isSearching && <div>Searching ...</div>}
-      {results.map(result => (
-        <div key={result.id}>
-          <h2>{result.name}</h2>
-          <Link to = '/login'>
-          <img width="400" height="200"
-            src={`${result.background_image}`}
-          />
-          </Link>
-        </div>
-      ))}
-    </div>
+  <Container>
+    <Grid item xs={3}/>
+    <Grid item xs={12} sm={6}>
+      <div>
+        <TextField
+          variant="outlined"
+          required
+          fullWidth
+          id="findgame"
+          label="Find a Game"
+          name="findGame"
+          autoComplete="fGame"
+          onChange={e => setSearchTerm(e.target.value)}
+        />
+        {isSearching && <div>Searching ...</div>}
+        {results.map(result => (
+          <div key={result.id}>
+            <h2>{result.name}</h2>
+            <Link to = '/game'>
+            <img width="100%" height="55%"
+              src={`${result.background_image}`}
+              onClick={() => props.setGameState({name:result.slug})}
+            />
+            </Link><br/>
+          </div>
+        ))}
+      </div>
+    </Grid>
+  </Container>
   );
 }
 
-function searchCharacters(search) {
+function searchGame(search) {
   const queryString = `${search}`;
   return fetch(
     `https://api.rawg.io/api/games?search=${queryString}`,
