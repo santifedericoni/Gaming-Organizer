@@ -19,7 +19,6 @@ const [loadingState, setLoadingState] = useState ({
             .then(data => {
             setResultState ({
                 data:data,
-                description:data.description.substring(0, data.description.length)
             }) 
             setLoadingState ( {
                 loading:false
@@ -33,9 +32,7 @@ const [loadingState, setLoadingState] = useState ({
     }
     if (loadingState.loading === true ){
         getGame();
-    } else {
-        
-    }
+    } else {}
 
     if (loadingState.loading === true){
         return (
@@ -49,8 +46,9 @@ const [loadingState, setLoadingState] = useState ({
         } else {
             return (
                 <div>
-                    {console.log('test',resultState.data)}
-                    {resultState.description}
+                    <img width="10%" height="10%"
+                    src={`${resultState.data.background_image}`} /><br/>
+                    {resultState.data.description}
                     {resultState.data.platforms.map(gameData => (                        
                     <div key={gameData.id}><p> <Checkbox  /> {gameData.platform.name}</p><br/> </div>))}
                 </div>
