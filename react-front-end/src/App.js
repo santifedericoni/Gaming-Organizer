@@ -28,7 +28,7 @@ export default function App (){
   });
 
   const [gameState, setGameState] = useState({
-    name: 'monkey-island-2-lechucks-revenge',
+    name: '',
   });
 
     return (

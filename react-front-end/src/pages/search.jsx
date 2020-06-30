@@ -17,6 +17,7 @@ import {
   MuiThemeProvider
 } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -88,7 +89,7 @@ export default function app(props) {
           autoComplete="fGame"
           onChange={e => setSearchTerm(e.target.value)}
         />
-        {isSearching && <div>Searching ...</div>}
+        {isSearching && <div> <CircularProgress /></div>}
         {results.map(result => (
           <div key={result.id}>
             <h2>{result.name}</h2>
