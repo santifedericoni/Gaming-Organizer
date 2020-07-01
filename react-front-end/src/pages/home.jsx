@@ -1,13 +1,10 @@
-import React from 'react';
-import { Container } from '@material-ui/core';
+import React from "react";
+import { Container } from "@material-ui/core";
 
 const MainPage = () => {
-  
   return (
     <Container>
-    <div >
-        test
-    </div>
+      <div>test</div>
     </Container>
   );
 };
