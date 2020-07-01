@@ -61,10 +61,9 @@ const MainPage = props => {
         {resultState.data.platforms.map(gameData => (
           <div key={gameData.id}>
             <p>
-              {" "}
               <Checkbox /> {gameData.platform.name}
             </p>
-            <br />{" "}
+            <br />
           </div>
         ))}
       </div>
