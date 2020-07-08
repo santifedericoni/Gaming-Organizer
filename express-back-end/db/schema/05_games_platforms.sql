@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS games_platforms
+CASCADE;
+CREATE TABLE games_platforms
+(
+  id SERIAL PRIMARY KEY NOT NULL,
+  game_id INTEGER REFERENCES games(id) ON DELETE CASCADE,
+  platform_id INTEGER REFERENCES platforms(id) ON DELETE CASCADE,
+  name VARCHAR(255) NOT NULL,
+  genre VARCHAR(255) NOT NULL
+);

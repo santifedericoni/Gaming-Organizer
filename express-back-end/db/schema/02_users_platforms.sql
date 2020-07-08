@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS users_platforms CASCADE;
+CREATE TABLE users_platforms  (
+  id SERIAL PRIMARY KEY NOT NULL,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  platform_id INTEGER REFERENCES platforms(id) ON DELETE CASCADE
+);

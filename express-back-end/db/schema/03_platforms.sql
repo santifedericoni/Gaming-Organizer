@@ -1,0 +1,4 @@
+DROP TABLE IF EXISTS platforms CASCADE;
+CREATE TABLE platforms  (
+  id SERIAL PRIMARY KEY NOT NULL,
+  platform VARCHAR(255));
