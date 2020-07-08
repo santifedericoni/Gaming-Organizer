@@ -75,7 +75,7 @@ export default function app(props) {
     [debouncedSearchTerm]
   );
   return (
-  <Container>
+  <Container >
     <Grid item xs={3}/>
     <Grid item xs={12} sm={6}>
       <div>
