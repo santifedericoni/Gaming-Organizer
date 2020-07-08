@@ -1,4 +1,15 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Game Organizer
+
+Game organizer lets you manage your games purhcased on different platforms (PC, XBOX, PS4, Nitendo, etc. ) that you stay more connected to games: don't let your games outplay you!
+
+### stack
+- node.js
+- express.js
+- javascript
+- react
+- material-ui
+- postgreSQL
+- ElephantSQL
 
 ## Available Scripts
 
