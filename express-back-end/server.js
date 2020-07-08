@@ -22,4 +22,6 @@ App.listen(PORT, () => {
 });
 
 const usersQueries = require('./db/routes/user');
+const gamesQueries = require('./db/routes/game');
 App.use('/api/user', usersQueries(db));
+App.use('/api/game', gamesQueries(db));

@@ -5,6 +5,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import { makeStyles} from "@material-ui/core/styles";
+import axios from "axios";
 
 const MainPage = props => {
   const [resultState, setResultState] = useState({
@@ -21,11 +22,35 @@ const MainPage = props => {
 
   const useStyles = makeStyles(theme => ({
     submit: {
-      margin: theme.spacing(3, 0, 2),
+      background: '#1B4D3E',
+      borderRadius: 3,
+      border: 0,
+      color: 'white',
+      height: 48,
+      padding: '0 30px',
+      boxShadow: '0 3px 5px 2px rgba(255, 255, 255, .3)',
     },
   }));
   
   const classes = useStyles();
+
+  let handleSubmit = e => {
+    console.log('list')
+    const data = resultState.data;
+    e.preventDefault();
+    axios.post(`/api/game/addList`, {data }).then(res => {
+
+        });
+    };
+
+  let handleSubmitWishList = e => {
+    console.log('whislist')
+    const data = resultState.data;
+    e.preventDefault();
+    axios.post(`/api/game/addWishList`, {data }).then(res => {
+
+        });
+    };
 
   const getGame = () => {
     var proxyUrl = "https://cors-anywhere.herokuapp.com/",
@@ -87,6 +112,7 @@ const MainPage = props => {
             variant="contained"
             color="default"
             className={classes.submit}
+            onClick={handleSubmit}
           >
             add to list
         </Button>
@@ -98,6 +124,7 @@ const MainPage = props => {
               variant="contained"
               color="default"
               className={classes.submit}
+              onClick={handleSubmitWishList}
             >
               add to wishlist
             </Button>  

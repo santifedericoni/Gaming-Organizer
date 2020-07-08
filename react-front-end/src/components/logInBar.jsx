@@ -74,6 +74,11 @@ export default function MenuAppBar(props) {
                 Add Platforms
               </Link>
             </Button>
+            <Button color="inherit">
+              <Link to="/search" className="button">
+                search
+              </Link>
+            </Button>
             {auth && (
               <div>
                 <IconButton

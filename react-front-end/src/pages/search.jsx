@@ -57,9 +57,7 @@ export default function app(props) {
   const [isSearching, setIsSearching] = useState(false);
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
     
-  const updateGame = function (slug) {
-    console.log('slug',slug)
-  }
+
   useEffect(
     () => {
       if (debouncedSearchTerm) {
