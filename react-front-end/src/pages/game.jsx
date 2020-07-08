@@ -30,6 +30,9 @@ const MainPage = props => {
       padding: '0 30px',
       boxShadow: '0 3px 5px 2px rgba(255, 255, 255, .3)',
     },
+    title: {
+      margin: '0 0 0 30%',
+    }
   }));
   
   const classes = useStyles();
@@ -73,8 +76,7 @@ const MainPage = props => {
   };
   if (loadingState.loading === true) {
     getGame();
-  } else {
-  }
+  } 
 
   if (loadingState.loading === true) {
     return (
@@ -90,7 +92,7 @@ const MainPage = props => {
       <Container component="main" maxWidth="md">
 
       <div>
-        <h1>{resultState.data.name}</h1><br/>
+        <h1 className={classes.title}>{resultState.data.name}</h1><br/>
         <img
           width="100%"
           height="10%"

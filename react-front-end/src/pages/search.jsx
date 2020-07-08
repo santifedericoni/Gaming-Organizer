@@ -73,9 +73,12 @@ export default function app(props) {
     [debouncedSearchTerm]
   );
   return (
-  <Container >
-    <Grid item xs={3}/>
-    <Grid item xs={12} sm={6}>
+  <Container component="main" maxWidth="md">
+       <Grid container spacing={3}>
+      <Grid item xs={12}> 
+        
+        </Grid>
+        <Grid item xs={2}/>
       <div>
         <TextField
           variant="outlined"
