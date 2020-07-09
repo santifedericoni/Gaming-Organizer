@@ -12,6 +12,11 @@ const MainPage = props => {
     description: "",
   });
 
+  const [platformState, setPlatformState] = useState({
+    platform: [],
+  });
+
+
   const [loadingState, setLoadingState] = useState(
     {
       loading: true,
@@ -37,11 +42,19 @@ const MainPage = props => {
   
   const classes = useStyles();
 
+
+  const platformsSelected = (val) => {
+    setPlatformState( {        
+        ...platformState,
+        platform: [...platformState.platform,val]
+    }) 
+  }
+
   let handleSubmit = e => {
     console.log('list')
     const data = resultState.data;
     e.preventDefault();
-    axios.post(`/api/game/addList`, {data }).then(res => {
+    axios.post(`/api/game/addList`, {data,platformState }).then(res => {
 
         });
     };
@@ -77,7 +90,6 @@ const MainPage = props => {
   if (loadingState.loading === true) {
     getGame();
   } 
-
   if (loadingState.loading === true) {
     return (
       <Container component="main" maxWidth="md">
@@ -107,23 +119,17 @@ const MainPage = props => {
           alt="background"
         />
        <p> {resultState.data.description_raw}</p> <br/>
-       <h1>Select your platforms</h1>
+       <div>
+          <h1 className={classes.title}>Select your platforms</h1>
+       </div>
        <div>
        <Grid container spacing={1}>
       <Grid item xs={12}> 
         </Grid>
         <Grid item xs={2}/>
         <Grid item xs={2}/>
-          <Grid item xs={2}>
-          <div><p> PC<Checkbox/></p><br/> </div>
-          <div><p> PS4<Checkbox/></p><br/> </div>
-          <div><p> Xbox one<Checkbox/></p><br/> </div>
-          </Grid>
-          <Grid item xs={2}>
-          <div><p> Switch<Checkbox/></p><br/> </div>
-          <div><p> PS5<Checkbox/></p><br/> </div>
-          <div><p> Xbox Series X<Checkbox/></p><br/> </div>
-
+          <Grid item xs={4}>
+          {resultState.data.platforms.map(platform => <div key={platform.platform.id}><p> <Checkbox onClick = {val => platformsSelected(platform)}/> {platform.platform.name}</p><br/> </div>)}
           </Grid>
   </Grid>
   </div> <br/>
@@ -159,19 +165,8 @@ const MainPage = props => {
             </Button>  
           </Grid>
   </Grid>
-
       </Container>
-     
-                {/* {resultState.data.platforms.map(gameData => (
-          <div key={gameData.id}>
-            <p>
-              <Checkbox /> {gameData.platform.name}
-            </p>
-            <br />
-          </div>
-        ))} */}
       </div>
-
       </Container>
     );
   }
