@@ -1,4 +1,4 @@
-### User Stories
+# User Stories
 
 ## Login/logout
 - validation check for user registration
@@ -12,7 +12,7 @@
 - Each result has a link to its detailed page
 - (Stretch) Tooltips
 
-# Detail Page
+### Detail Page
 - show game details (Title, Platform, genre, description, photo, etc)
 - (Stretch) add the game to wishlist 
 - add the game to owned games
@@ -42,25 +42,26 @@
 - (Stretch) Game suggestions
 - Password update/recovery
 
-
-# (Stretch) Wishlist
-- Similar to game list…!
-
-
-# (Stretch) External API Calls
-- Add/remove Friend
-- User game list
-
-# (Stretch) Game DEALS!!!
-- Price comparison
-- (Extra stretch) Price history
-
 ## About us
 - Project/Application description
 - About Santy/Jason with emails and GitHub/LinkedIn
 - Future Goals
 
 
-# Theme color
+# Stretch goals and others
+
+## (Stretch) Wishlist
+- Similar to game list…!
+
+
+## (Stretch) External API Calls
+- Add/remove Friend
+- User game list
+
+## (Stretch) Game DEALS!!!
+- Price comparison
+- (Extra stretch) Price history
+
+## Theme color
 - Red/Blue
 
