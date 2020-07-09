@@ -1,12 +1,34 @@
-# React + Express No-Fluff Boilerplate
+# Game Organizer
 
-A boilerplate project for anyone interested in making a project that uses React and Express.
 
-This repository is a bootleg of @NimaBoscarino's [React Rails Boilerplate](https://github.com/NimaBoscarino/react-rails-boilerplate). It uses the same React app, but replaces the Rails server with an Express server.
+## About the Project
+Game Organizer is a fullstack react application that assists users to manage games they own on different platforms.
 
-Note! This boilerplate has _no fluff_! That means that there's nothing set up for you to do authentication stuff, there's no Redux stuff, and there's no React Router stuff. On the Express end, there is no session storage or database connection.
+This is a joint project by [Santy](https://github.com/santifedericoni) and [Jason](https://github.com/jpark-dev), two recent graduates from the [Lighthouse Labs](https://www.lighthouselabs.ca/) Vancouver, BC, Canada. 
 
-The main important bit is that the React project has `proxy` set to `localhost:8080` in the `package.json` file, and that the Express app listens to port 8080 in `server.js`. Take a look!
+[Santy](https://github.com/santifedericoni) first came up with the idea and setup the initial project and Jason later joined to deliver the knowledge and skills they learned from the Lighthouse Labs Bootcamp.
+
+## Stack
+
+Frontend
+- JavaScript ES6
+- React
+- Material-UI
+
+Backend
+- Express.js
+- Axios
+
+DB
+- postgreSQL
+- ElephantSQL (Cloud)
+
+
+## Current Progress
+**Wk1**: We had 3 video meetings to share and discuss the general idea about the project. We then began planning DB using draw.io to understand what kind of data we actually want to store to successfully render the application and necessary features. We have agreed to have morning meetup to discuss daily progress and share ideas.
+
+**(Current) Wk2**: Wrote user stories to fix the exact features to be implemented in our project, discussed how to build them with limitations. Continued working on basic features.
+
 
 ## Running the projects
 
@@ -18,16 +40,6 @@ In the other terminal, `cd` into `express-back-end`. Run `npm install` or `yarn`
 
 In the browser, you can click on the button and see the data get loaded.
 
-If this doesn't work, please message me!
+If this doesn't work, please message us: 
+@[Santy](https://github.com/santifedericoni) or @[Jason](https://github.com/jpark-dev)!!
 
-## Next steps
-
-From here, you can start working on your project!
-
-As soon as the dependencies are installed, your Express server can serve JSON and static assets (like images) in response to API calls from the React app. You can get started on developing your React app, routing plan, etc. right away! Any request that isn't handled by React is passed on to the Express server. That means that you can call a route like `/api/users` from React using `fetch`, `axios`, or something else, and Express will receive it as though they originated from the same app. For routing, best practice is to namespace all of your data routes to `/api`, so that they don't clash with other routing schemes, like React Router.
-
-At some point, you'll likely want to install and configure a database driver for Postgres or MongoDB-- Refer to past projects for hints on how to do this!
-
-## Contact
-
-Please contact me on Slack (@garrettgsb) or Nima at `nima@lighthouselabs.com` if you have any questions or requests, or post an issue to this repo.
