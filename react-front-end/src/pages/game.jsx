@@ -4,7 +4,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import { makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 
 const MainPage = props => {
@@ -13,17 +13,15 @@ const MainPage = props => {
   });
 
   const [platformState, setPlatformState] = useState({
-    platform: [],
+
   });
 
 
   const [loadingState, setLoadingState] = useState(
     {
       loading: true,
-    },
-    []
-  );
-  
+    },[]);
+
 
   const useStyles = makeStyles(theme => ({
     submit: {
@@ -39,34 +37,43 @@ const MainPage = props => {
       margin: '0 0 0 30%',
     }
   }));
-  
+
   const classes = useStyles();
 
 
   const platformsSelected = (val) => {
-    setPlatformState( {        
+    if (platformState[val.platform.name] === true) {
+      setPlatformState({
         ...platformState,
-        platform: [...platformState.platform,val]
-    }) 
+        [val.platform.name]: false,
+      })
+    } else {
+
+      setPlatformState({
+        ...platformState,
+        [val.platform.name]: true,
+      })
+    }
+    console.log('test', platformState)
   }
 
   let handleSubmit = e => {
     console.log('list')
     const data = resultState.data;
     e.preventDefault();
-    axios.post(`/api/game/addList`, {data,platformState }).then(res => {
+    axios.post(`/api/game/addList`, { data, platformState }).then(res => {
 
-        });
-    };
+    });
+  };
 
   let handleSubmitWishList = e => {
     console.log('whislist')
     const data = resultState.data;
     e.preventDefault();
-    axios.post(`/api/game/addWishList`, {data }).then(res => {
+    axios.post(`/api/game/addWishList`, { data }).then(res => {
 
-        });
-    };
+    });
+  };
 
   const getGame = () => {
     var proxyUrl = "https://cors-anywhere.herokuapp.com/",
@@ -89,18 +96,18 @@ const MainPage = props => {
   };
   if (loadingState.loading === true) {
     getGame();
-  } 
+  }
   if (loadingState.loading === true) {
     return (
       <Container component="main" maxWidth="md">
-               <Grid container spacing={3}>
-      <Grid item xs={12}> 
-        
-        </Grid>
-        <Grid item xs={2}/>
-        <Grid item xs={2}/>
-        <div>
-          <CircularProgress /><br/>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+
+          </Grid>
+          <Grid item xs={2} />
+          <Grid item xs={2} />
+          <div>
+            <CircularProgress /><br />
           Loading
         </div>
         </Grid>
@@ -110,63 +117,63 @@ const MainPage = props => {
     return (
       <Container component="main" maxWidth="md">
 
-      <div>
-        <h1 className={classes.title}>{resultState.data.name}</h1><br/>
-        <img
-          width="100%"
-          height="10%"
-          src={`${resultState.data.background_image}`}
-          alt="background"
-        />
-       <p> {resultState.data.description_raw}</p> <br/>
-       <div>
-          <h1 className={classes.title}>Select your platforms</h1>
-       </div>
-       <div>
-       <Grid container spacing={1}>
-      <Grid item xs={12}> 
-        </Grid>
-        <Grid item xs={2}/>
-        <Grid item xs={2}/>
-          <Grid item xs={4}>
-          {resultState.data.platforms.map(platform => <div key={platform.platform.id}><p> <Checkbox onClick = {val => platformsSelected(platform)}/> {platform.platform.name}</p><br/> </div>)}
-          </Grid>
-  </Grid>
-  </div> <br/>
-       <Container component="main" maxWidth="md">
-       <Grid container spacing={3}>
-      <Grid item xs={12}> 
-        
-        </Grid>
-        <Grid item xs={2}/>
+        <div>
+          <h1 className={classes.title}>{resultState.data.name}</h1><br />
+          <img
+            width="100%"
+            height="10%"
+            src={`${resultState.data.background_image}`}
+            alt="background"
+          />
+          <p> {resultState.data.description_raw}</p> <br />
+          <div>
+            <h1 className={classes.title}>Select your platforms</h1>
+          </div>
+          <div>
+            <Grid container spacing={1}>
+              <Grid item xs={12}>
+              </Grid>
+              <Grid item xs={2} />
+              <Grid item xs={2} />
+              <Grid item xs={4}>
+                {resultState.data.platforms.map(platform => <div key={platform.platform.id}><p> <Checkbox onClick={val => platformsSelected(platform)} /> {platform.platform.name}</p><br /> </div>)}
+              </Grid>
+            </Grid>
+          </div> <br />
+          <Container component="main" maxWidth="md">
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
 
-          <Grid item xs={4}>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="default"
-            className={classes.submit}
-            onClick={handleSubmit}
-          >
-            add to list
+              </Grid>
+              <Grid item xs={2} />
+
+              <Grid item xs={4}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="default"
+                  className={classes.submit}
+                  onClick={handleSubmit}
+                >
+                  add to list
         </Button>
-          </Grid>
-          <Grid item xs={4}>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="default"
-              className={classes.submit}
-              onClick={handleSubmitWishList}
-            >
-              add to wishlist
-            </Button>  
-          </Grid>
-  </Grid>
-      </Container>
-      </div>
+              </Grid>
+              <Grid item xs={4}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="default"
+                  className={classes.submit}
+                  onClick={handleSubmitWishList}
+                >
+                  add to wishlist
+            </Button>
+              </Grid>
+            </Grid>
+          </Container>
+        </div>
       </Container>
     );
   }
