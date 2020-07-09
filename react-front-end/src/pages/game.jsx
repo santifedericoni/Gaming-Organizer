@@ -81,10 +81,17 @@ const MainPage = props => {
   if (loadingState.loading === true) {
     return (
       <Container component="main" maxWidth="md">
+               <Grid container spacing={3}>
+      <Grid item xs={12}> 
+        
+        </Grid>
+        <Grid item xs={2}/>
+        <Grid item xs={2}/>
         <div>
-          <CircularProgress />
-          Game info
+          <CircularProgress /><br/>
+          Loading
         </div>
+        </Grid>
       </Container>
     );
   } else {
@@ -99,7 +106,27 @@ const MainPage = props => {
           src={`${resultState.data.background_image}`}
           alt="background"
         />
-       <p> {resultState.data.description_raw}</p>
+       <p> {resultState.data.description_raw}</p> <br/>
+       <h1>Select your platforms</h1>
+       <div>
+       <Grid container spacing={1}>
+      <Grid item xs={12}> 
+        </Grid>
+        <Grid item xs={2}/>
+        <Grid item xs={2}/>
+          <Grid item xs={2}>
+          <div><p> PC<Checkbox/></p><br/> </div>
+          <div><p> PS4<Checkbox/></p><br/> </div>
+          <div><p> Xbox one<Checkbox/></p><br/> </div>
+          </Grid>
+          <Grid item xs={2}>
+          <div><p> Switch<Checkbox/></p><br/> </div>
+          <div><p> PS5<Checkbox/></p><br/> </div>
+          <div><p> Xbox Series X<Checkbox/></p><br/> </div>
+
+          </Grid>
+  </Grid>
+  </div> <br/>
        <Container component="main" maxWidth="md">
        <Grid container spacing={3}>
       <Grid item xs={12}> 
