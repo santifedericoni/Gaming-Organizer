@@ -4,8 +4,8 @@ const router = express.Router();
 module.exports = (db) => {
   router.post('/addList', (req, res) => {
     //   console.log(req.body)
-    console.log(req.body.platformState,'platforms')
-    console.log(req.body.data.name,'game')
+    console.log(req.body.platforms,'<platforms>')
+    console.log(req.body.data.name,'<game>')
 
     // const name = req.body.form.name;
     // const lastName = req.body.form.lastName;
