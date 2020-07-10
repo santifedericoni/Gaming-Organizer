@@ -3,7 +3,7 @@ const router = express.Router();
 
 module.exports = (db) => {
   router.post('/addList', (req, res) => {
-    //   console.log(req.body)
+      console.log(req.body)
     console.log(req.body.platformState.platform,'platforms')
     console.log(req.body.data.name,'game')
 
