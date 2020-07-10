@@ -1,78 +1,95 @@
 import React, { useState } from "react";
-import { Container } from "@material-ui/core";
+import {
+  Container,
+  Checkbox,
+  Grid,
+  Button,
+  makeStyles,
+} from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Checkbox from "@material-ui/core/Checkbox";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 
-const MainPage = props => {
+export default function MainPage(props) {
   const [resultState, setResultState] = useState({
     description: "",
   });
 
-  const [platformState, setPlatformState] = useState({
-
-  });
-
+  const [platformState, setPlatformState] = useState({});
 
   const [loadingState, setLoadingState] = useState(
     {
       loading: true,
-    },[]);
-
+    },
+    []
+  );
 
   const useStyles = makeStyles(theme => ({
     submit: {
-      background: '#1B4D3E',
+      background: "#1B4D3E",
       borderRadius: 3,
       border: 0,
-      color: 'white',
+      color: "white",
       height: 48,
-      padding: '0 30px',
-      boxShadow: '0 3px 5px 2px rgba(255, 255, 255, .3)',
+      padding: "0 30px",
+      boxShadow: "0 3px 5px 2px rgba(255, 255, 255, .3)",
     },
     title: {
-      margin: '0 0 0 30%',
-    }
+      margin: "0 0 0 30%",
+    },
   }));
 
   const classes = useStyles();
 
-
-  const platformsSelected = (val) => {
+  const platformsSelected = val => {
     if (platformState[val.platform.name] === true) {
       setPlatformState({
         ...platformState,
         [val.platform.name]: false,
-      })
+      });
     } else {
-
       setPlatformState({
         ...platformState,
         [val.platform.name]: true,
-      })
+      });
     }
-    console.log('test', platformState)
-  }
+    console.log("test", platformState);
+  };
+
+  // ALTERNATE SOLUTION to handle checkbox state, using frontend to get list of platform names
+  // const handleCheck = e => {
+  //   const platformName = e.target.name;
+  //   const isChecked = e.target.checked;
+
+  //   if (isChecked) {
+  //     setPlatformState({
+  //       platform: [...platformState.platform, platformName],
+  //     });
+  //   } else {
+  //     const platformArr = platformState.platform;
+  //     for (const name of platformArr) {
+  //       if (platformName === name) {
+  //         const index = platformArr.indexOf(platformName);
+  //         if (index > -1) {
+  //           platformArr.splice(index, 1);
+  //         }
+  //         break;
+  //       }
+  //     }
+  //   }
+  // };
 
   let handleSubmit = e => {
-    console.log('list')
+    console.log("list");
     const data = resultState.data;
     e.preventDefault();
-    axios.post(`/api/game/addList`, { data, platformState }).then(res => {
-
-    });
+    axios.post(`/api/game/addList`, { data, platformState }).then(res => {});
   };
 
   let handleSubmitWishList = e => {
-    console.log('whislist')
+    console.log("whislist");
     const data = resultState.data;
     e.preventDefault();
-    axios.post(`/api/game/addWishList`, { data }).then(res => {
-
-    });
+    axios.post(`/api/game/addWishList`, { data }).then(res => {});
   };
 
   const getGame = () => {
@@ -101,24 +118,23 @@ const MainPage = props => {
     return (
       <Container component="main" maxWidth="md">
         <Grid container spacing={3}>
-          <Grid item xs={12}>
-
-          </Grid>
+          <Grid item xs={12}></Grid>
           <Grid item xs={2} />
           <Grid item xs={2} />
           <div>
-            <CircularProgress /><br />
-          Loading
-        </div>
+            <CircularProgress />
+            <br />
+            Loading
+          </div>
         </Grid>
       </Container>
     );
   } else {
     return (
       <Container component="main" maxWidth="md">
-
         <div>
-          <h1 className={classes.title}>{resultState.data.name}</h1><br />
+          <h1 className={classes.title}>{resultState.data.name}</h1>
+          <br />
           <img
             width="100%"
             height="10%"
@@ -131,20 +147,26 @@ const MainPage = props => {
           </div>
           <div>
             <Grid container spacing={1}>
-              <Grid item xs={12}>
-              </Grid>
+              <Grid item xs={12}></Grid>
               <Grid item xs={2} />
               <Grid item xs={2} />
               <Grid item xs={4}>
-                {resultState.data.platforms.map(platform => <div key={platform.platform.id}><p> <Checkbox onClick={val => platformsSelected(platform)} /> {platform.platform.name}</p><br /> </div>)}
+                {resultState.data.platforms.map(platform => (
+                  <div key={platform.platform.id}>
+                    <p>
+                      <Checkbox onClick={val => platformsSelected(platform)} />
+                      {platform.platform.name}
+                    </p>
+                    <br />
+                  </div>
+                ))}
               </Grid>
             </Grid>
-          </div> <br />
+          </div>
+          <br />
           <Container component="main" maxWidth="md">
             <Grid container spacing={3}>
-              <Grid item xs={12}>
-
-              </Grid>
+              <Grid item xs={12}></Grid>
               <Grid item xs={2} />
 
               <Grid item xs={4}>
@@ -157,7 +179,7 @@ const MainPage = props => {
                   onClick={handleSubmit}
                 >
                   add to list
-        </Button>
+                </Button>
               </Grid>
               <Grid item xs={4}>
                 <Button
@@ -169,7 +191,7 @@ const MainPage = props => {
                   onClick={handleSubmitWishList}
                 >
                   add to wishlist
-            </Button>
+                </Button>
               </Grid>
             </Grid>
           </Container>
@@ -177,6 +199,4 @@ const MainPage = props => {
       </Container>
     );
   }
-};
-
-export default MainPage;
+}
