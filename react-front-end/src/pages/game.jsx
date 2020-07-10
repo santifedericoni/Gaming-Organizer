@@ -14,8 +14,9 @@ export default function MainPage(props) {
     description: "",
   });
 
-  const [platformState, setPlatformState] = useState({});
+  const [platforms, setPlatforms] = useState([]);
 
+  const [isValid, setValid] = useState(false);
   const [loadingState, setLoadingState] = useState(
     {
       loading: true,
@@ -40,52 +41,59 @@ export default function MainPage(props) {
 
   const classes = useStyles();
 
-  const platformsSelected = val => {
-    if (platformState[val.platform.name] === true) {
-      setPlatformState({
-        ...platformState,
-        [val.platform.name]: false,
-      });
-    } else {
-      setPlatformState({
-        ...platformState,
-        [val.platform.name]: true,
-      });
-    }
-    console.log("test", platformState);
-  };
-
-  // ALTERNATE SOLUTION to handle checkbox state, using frontend to get list of platform names
-  // const handleCheck = e => {
-  //   const platformName = e.target.name;
-  //   const isChecked = e.target.checked;
-
-  //   if (isChecked) {
-  //     setPlatformState({
-  //       platform: [...platformState.platform, platformName],
+  // ALTERNATE SOLUTION to handle checkbox state, using backend to get list of platform names in kv
+  // const platformsSelected = val => {
+  //   if (platforms[val.platform.name] === true) {
+  //     setPlatforms({
+  //       ...platforms,
+  //       [val.platform.name]: false,
   //     });
   //   } else {
-  //     const platformArr = platformState.platform;
-  //     for (const name of platformArr) {
-  //       if (platformName === name) {
-  //         const index = platformArr.indexOf(platformName);
-  //         if (index > -1) {
-  //           platformArr.splice(index, 1);
-  //         }
-  //         break;
-  //       }
-  //     }
+  //     setPlatforms({
+  //       ...platforms,
+  //       [val.platform.name]: true,
+  //     });
   //   }
+  //   console.log("test", platforms);
   // };
 
-  let handleSubmit = e => {
-    console.log("list");
-    const data = resultState.data;
-    e.preventDefault();
-    axios.post(`/api/game/addList`, { data, platformState }).then(res => {});
+  const handleCheck = e => {
+    const platformName = e.target.name;
+    const isChecked = e.target.checked;
+
+    if (isChecked) {
+      setPlatforms([...platforms, platformName]);
+      setValid(true);
+    } else {
+      for (const name of platforms) {
+        if (platformName === name) {
+          const index = platforms.indexOf(platformName);
+          if (index > -1) {
+            platforms.splice(index, 1);
+          }
+          console.log(platforms.length);
+          if (platforms.length === 0) {
+            setValid(false);
+          }
+          break;
+        }
+      }
+    }
   };
 
-  let handleSubmitWishList = e => {
+  const handleSubmit = e => {
+    const data = resultState.data;
+
+    e.preventDefault();
+
+    if (!isValid) {
+      alert("Please select at least one platform to be added.");
+    } else {
+      axios.post(`/api/game/addList`, { data, platforms }).then(res => {});
+    }
+  };
+
+  const handleSubmitWishList = e => {
     console.log("whislist");
     const data = resultState.data;
     e.preventDefault();
@@ -154,7 +162,10 @@ export default function MainPage(props) {
                 {resultState.data.platforms.map(platform => (
                   <div key={platform.platform.id}>
                     <p>
-                      <Checkbox onClick={val => platformsSelected(platform)} />
+                      <Checkbox
+                        onChange={handleCheck}
+                        name={platform.platform.name}
+                      />
                       {platform.platform.name}
                     </p>
                     <br />
@@ -177,6 +188,7 @@ export default function MainPage(props) {
                   color="default"
                   className={classes.submit}
                   onClick={handleSubmit}
+                  disabled={!isValid}
                 >
                   add to list
                 </Button>
@@ -189,6 +201,7 @@ export default function MainPage(props) {
                   color="default"
                   className={classes.submit}
                   onClick={handleSubmitWishList}
+                  disabled={!isValid}
                 >
                   add to wishlist
                 </Button>
