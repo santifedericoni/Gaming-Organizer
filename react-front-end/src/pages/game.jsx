@@ -83,13 +83,13 @@ export default function MainPage(props) {
 
   const handleSubmit = e => {
     const data = resultState.data;
-
+    const userId = props.userState.userId
     e.preventDefault();
 
     if (!isValid) {
       alert("Please select at least one platform to be added.");
     } else {
-      axios.post(`/api/game/addList`, { data, platforms }).then(res => {});
+      axios.post(`/api/game/addList`, { data, platforms, userId }).then(res => {});
     }
   };
 
