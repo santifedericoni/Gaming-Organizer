@@ -5,7 +5,11 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles, createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import {
+  makeStyles,
+  createMuiTheme,
+  MuiThemeProvider,
+} from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import SportsEsportsIcon from "@material-ui/icons/SportsEsports";
 import green from "@material-ui/core/colors/green";
@@ -54,74 +58,106 @@ export default function SignIn(props) {
     email: "",
     password: "",
   });
-  let handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    axios.post(`/api/user/login`, { form }).then(res => {
-      if (res.data.user.length > 0) {
-        props.setUserState({
-          name: res.data.user[0].name,
-          lastName: res.data.user[0].lastname,
-          userId: res.data.user[0].id,
-          login: true,
-          mail: res.data.user[0].email,
-        });
-      } else {
-        alert("invalid data");
-      }
-    });
+    if (form.email === "" || form.password === "") {
+      return alert("please enter your email and password");
+    }
+
+    return axios
+      .post(`/auth/login_process`, form)
+      .then(res => {
+        const user = res.data;
+        if (user.redirect === "/") {
+          console.log("/", res);
+          // window.location = "/";
+          props.setUserState({
+            name: user.name,
+            lastName: user.lastname,
+            userId: user.id,
+            login: true,
+            mail: user.email,
+          });
+        } else if (user.redirect === "/login") {
+          console.log("else if ");
+          console.log("/login", res);
+
+          // window.location = "login";
+        }
+        // const user = res.data.user;
+        // if (!user) {
+        //   alert("retrieved no data");
+        // } else {
+        //   if (user.length > 0) {
+        //     props.setUserState({
+        //       name: user[0].name,
+        //       lastName: user[0].lastname,
+        //       userId: user[0].id,
+        //       login: true,
+        //       mail: user[0].email,
+        //     });
+        //   } else {
+        //     alert("invalid data");
+        //   }
+        // }
+      })
+      .catch(err => {
+        alert("invalid email or password");
+        // window.location = "/login";
+      });
   };
 
   if (props.userState) {
     if (props.userState.login === false) {
       return (
         <MuiThemeProvider theme={theme}>
-          <Container component="main" maxWidth="xs">
+          <Container component='main' maxWidth='xs'>
             <CssBaseline />
             <div className={classes.paper}>
               <Avatar className={classes.avatar}>
                 <SportsEsportsIcon />
               </Avatar>
-              <Typography component="h1" variant="h5">
+              <Typography component='h1' variant='h5'>
                 Sign in
               </Typography>
               <form className={classes.form} noValidate onSubmit={handleSubmit}>
                 <TextField
-                  variant="outlined"
-                  margin="normal"
+                  variant='outlined'
+                  margin='normal'
                   required
                   fullWidth
-                  id="email"
-                  label="Email Address"
+                  id='email'
+                  label='Email Address'
                   value={form.email}
                   onChange={e => setForm({ ...form, email: e.target.value })}
-                  name="email"
-                  autoComplete="email"
+                  name='email'
+                  autoComplete='email'
                   autoFocus
                 />
                 <TextField
-                  variant="outlined"
-                  margin="normal"
+                  variant='outlined'
+                  margin='normal'
                   required
                   fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
+                  name='password'
+                  label='Password'
+                  type='password'
+                  id='password'
+                  autoComplete='current-password'
                   onChange={e => setForm({ ...form, password: e.target.value })}
                 />
                 <Button
-                  type="submit"
+                  type='submit'
                   fullWidth
-                  variant="contained"
-                  color="primary"
+                  variant='contained'
+                  color='primary'
                   className={classes.submit}
                 >
                   Sign In
                 </Button>
                 <Grid container>
                   <Grid item>
-                    <Link to="/signIn" variant="body2">
+                    <Link to='/signIn' variant='body2'>
                       {"Don't have an account? Sign Up"}
                     </Link>
                   </Grid>

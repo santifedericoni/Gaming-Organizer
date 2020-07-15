@@ -12,6 +12,10 @@ app.use(session({
   store: new FileStore()
 }))
 
+const passport = require('passport'), LocalStrategy = require('passport-local').Strategy;
+
+
+
 app.get('/', function (req, res, next) {
   console.log(req.session);
   if (req.session.num === undefined) {
