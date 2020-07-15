@@ -1,30 +1,50 @@
-require('dotenv').config();
-const Express = require('express');
-const App = Express();
-const BodyParser = require('body-parser');
-const db = require('./db/index');
+require("dotenv").config();
+const express = require("express");
+const app = express();
+const bodyParser = require("body-parser");
+const session = require("express-session");
+const FileStore = require("session-file-store")(session);
+const db = require("./db/index");
 const PORT = 8080;
 
-// Express Configuration
-// App.use(cors());
-App.use(BodyParser.urlencoded({ extended: false }));
-App.use(Express.static('public'));
-App.use(BodyParser.json());
+// express config
+
+app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+// app.use(cors());
+
+// session config
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+    store: new FileStore(),
+  })
+);
 
 // Sample GET route
-App.get('/api/data', (req, res) => res.json({
-  message: "Seems to work!",
-}));
+app.get("/api/data", (req, res) =>
+  res.json({
+    message: "Seems to work!",
+  })
+);
 
-App.listen(PORT, () => {
+// import passport.js for authentication middleware
+const passport = require("./lib/passport")(db, app);
+
+const usersQueries = require("./db/routes/user")(db);
+const gamesQueries = require("./db/routes/game")(db);
+const authRouter = require("./db/routes/auth")(passport);
+
+app.use("/api/user", usersQueries);
+app.use("/api/game", gamesQueries);
+app.use("/auth", authRouter);
+
+app.listen(PORT, () => {
   // eslint-disable-next-line no-console
-  console.log(`Express seems to be listening on port ${PORT} so that's pretty good 👍`);
+  console.log(
+    `express seems to be listening on port ${PORT} so that's pretty good 👍`
+  );
 });
-
-const usersQueries = require('./db/routes/user');
-const gamesQueries = require('./db/routes/game');
-const loginQueries = require('./db/routes/login');
-
-App.use('/api/user', usersQueries(db));
-App.use('/api/game', gamesQueries(db));
-App.use('/auth', loginQueries(db));

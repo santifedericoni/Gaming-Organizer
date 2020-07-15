@@ -23,23 +23,23 @@ module.exports = db => {
       });
   });
 
-  router.post("/login", (req, res) => {
-    const email = req.body.form.email;
-    const password = req.body.form.password;
-    const values = [email, password];
-    let query = `
-      SELECT * FROM users WHERE email = $1 and password = $2;
-      `;
+  // router.post("/login", (req, res) => {
+  //   const email = req.body.form.email;
+  //   const password = req.body.form.password;
+  //   const values = [email, password];
+  //   let query = `
+  //     SELECT * FROM users WHERE email = $1 and password = $2;
+  //     `;
 
-    db.query(query, values)
-      .then(data => {
-        const user = data.rows;
-        res.json({ user });
-      })
-      .catch(err => {
-        res.status(500).json({ error: err.message });
-      });
-  });
+  //   db.query(query, values)
+  //     .then(data => {
+  //       const user = data.rows;
+  //       res.json({ user });
+  //     })
+  //     .catch(err => {
+  //       res.status(500).json({ error: err.message });
+  //     });
+  // });
 
   router.post("/:user_id", (req, res) => {
     const values = [
