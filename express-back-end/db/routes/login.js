@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const session = require("express-session");
+const { request } = require("express");
 const FileStore = require("session-file-store")(session);
 const passport = require("passport"),
   LocalStrategy = require("passport-local").Strategy;
@@ -73,6 +74,13 @@ module.exports = db => {
     } else {
       return res.json({ redirect: "/login" });
     }
+  });
+
+  router.get('/logout', (req, res) => {
+    req.logout();
+    req.session.save(() => {
+      res.redirect('/');
+    });
   });
 
   // router.post('/login', (req, res) => {
