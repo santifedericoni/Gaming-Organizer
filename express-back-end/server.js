@@ -5,7 +5,7 @@ const BodyParser = require('body-parser');
 const db = require('./db/index');
 const PORT = 8080;
 const Session = require('express-session')
-const FileStore = require('session-file-store')(session);
+const FileStore = require('session-file-store')(Session);
 
 
 // Express Configuration
@@ -14,7 +14,7 @@ App.use(BodyParser.urlencoded({ extended: false }));
 App.use(Express.static('public'));
 App.use(BodyParser.json());
 
-App.use(session({
+App.use(Session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
@@ -33,5 +33,8 @@ App.listen(PORT, () => {
 
 const usersQueries = require('./db/routes/user');
 const gamesQueries = require('./db/routes/game');
+const loginQueries = require('./db/routes/login');
+
 App.use('/api/user', usersQueries(db));
 App.use('/api/game', gamesQueries(db));
+App.use('/auth', loginQueries(db));
