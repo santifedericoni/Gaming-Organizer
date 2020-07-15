@@ -4,8 +4,7 @@ const router = express.Router();
 module.exports = passport => {
   router.post(
     "/login_process",
-    passport.authenticate("local"),
-    { failureFlash: true, successFlash: true },
+    passport.authenticate("local"), 
     (req, res) => {
       if (req.user) {
         req.user.redirect = "/";
