@@ -60,15 +60,29 @@ export default function SignIn(props) {
   });
   const handleSubmit = e => {
     e.preventDefault();
+    if (form.email === "" || form.password === "") {
+      return alert("please enter your email and password");
+    }
 
-    axios
+    return axios
       .post(`/auth/login_process`, form)
       .then(res => {
-        console.log("res:", res);
-        if (res.data.redirect === '/') {
-          window.location = "/";
-        } else if (res.data.redirect === 'login') {
-          window.location = "login";
+        const user = res.data;
+        if (user.redirect === "/") {
+          console.log("/", res);
+          // window.location = "/";
+          props.setUserState({
+            name: user.name,
+            lastName: user.lastname,
+            userId: user.id,
+            login: true,
+            mail: user.email,
+          });
+        } else if (user.redirect === "/login") {
+          console.log("else if ");
+          console.log("/login", res);
+
+          // window.location = "login";
         }
         // const user = res.data.user;
         // if (!user) {
@@ -88,8 +102,8 @@ export default function SignIn(props) {
         // }
       })
       .catch(err => {
-        console.log("err: ", err);
-        window.location = "/login";
+        alert("invalid email or password");
+        // window.location = "/login";
       });
   };
 
