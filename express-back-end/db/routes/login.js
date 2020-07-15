@@ -1,33 +1,44 @@
 const express = require("express");
 const router = express.Router();
-const passport = require("passport"),
-  LocalStrategy = require("passport-local").Strategy;
+
 
 module.exports = db => {
-
+  const passport = require("passport"),
+  LocalStrategy = require("passport-local").Strategy;
   passport.use(
-    new LocalStrategy(function (username, password, done) {
-      // User.findOne({ username: username }, (err, user) => {
-      //   if (err) {
-      //     return done(err);
-      //   }
-      //   if (!user) {
-      //     return done(null, false);
-      //   }
-      //   if (!user.verifyPassword(password)) {
-      //     return done(null, false);
-      //   }
-      //   return done(null, user);
-      // });
-    })
+    new LocalStrategy(
+      {
+        usernameField: "email",
+        passwordField: "password",
+      },
+      (username, password, done) => {
+        console.log("Local", username, password);
+        // User.findOne({ username: username }, (err, user) => {
+        //   if (err) {
+        //     return done(err);
+        //   }
+        //   if (!user) {
+        //     return done(null, false);
+        //   }
+        //   if (!user.verifyPassword(password)) {
+        //     return done(null, false);
+        //   }
+        //   return done(null, user);
+        // });
+      }
+    )
   );
 
   router.post(
     "/login_process",
-    passport.authenticate("local", { failureRedirect: "/" }),
+    passport.authenticate("local"),
     (req, res) => {
-      console.log("login!!!!!!");
-      res.redirect("/");
+      const path = {};
+      if (req.user) {
+        path.redirect = "/";
+      } else {
+        path.redirect = "/login";
+      }
     }
   );
 

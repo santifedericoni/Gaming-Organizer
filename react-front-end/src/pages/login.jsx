@@ -58,79 +58,92 @@ export default function SignIn(props) {
     email: "",
     password: "",
   });
-  let handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    axios.post(`/auth/login_process`, { form }).then(res => {
-      const user = res.data.user;
-      if (!user) {
-        alert("retrieved no data");
-      } else {
-        if (user.length > 0) {
-          props.setUserState({
-            name: user[0].name,
-            lastName: user[0].lastname,
-            userId: user[0].id,
-            login: true,
-            mail: user[0].email,
-          });
-        } else {
-          alert("invalid data");
+
+    axios
+      .post(`/auth/login_process`, form)
+      .then(res => {
+        console.log("res:", res);
+        if (res.data.redirect === '/') {
+          window.location = "/";
+        } else if (res.data.redirect === 'login') {
+          window.location = "login";
         }
-      }
-    });
+        // const user = res.data.user;
+        // if (!user) {
+        //   alert("retrieved no data");
+        // } else {
+        //   if (user.length > 0) {
+        //     props.setUserState({
+        //       name: user[0].name,
+        //       lastName: user[0].lastname,
+        //       userId: user[0].id,
+        //       login: true,
+        //       mail: user[0].email,
+        //     });
+        //   } else {
+        //     alert("invalid data");
+        //   }
+        // }
+      })
+      .catch(err => {
+        console.log("err: ", err);
+        window.location = "/login";
+      });
   };
 
   if (props.userState) {
     if (props.userState.login === false) {
       return (
         <MuiThemeProvider theme={theme}>
-          <Container component="main" maxWidth="xs">
+          <Container component='main' maxWidth='xs'>
             <CssBaseline />
             <div className={classes.paper}>
               <Avatar className={classes.avatar}>
                 <SportsEsportsIcon />
               </Avatar>
-              <Typography component="h1" variant="h5">
+              <Typography component='h1' variant='h5'>
                 Sign in
               </Typography>
               <form className={classes.form} noValidate onSubmit={handleSubmit}>
                 <TextField
-                  variant="outlined"
-                  margin="normal"
+                  variant='outlined'
+                  margin='normal'
                   required
                   fullWidth
-                  id="email"
-                  label="Email Address"
+                  id='email'
+                  label='Email Address'
                   value={form.email}
                   onChange={e => setForm({ ...form, email: e.target.value })}
-                  name="email"
-                  autoComplete="email"
+                  name='email'
+                  autoComplete='email'
                   autoFocus
                 />
                 <TextField
-                  variant="outlined"
-                  margin="normal"
+                  variant='outlined'
+                  margin='normal'
                   required
                   fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
+                  name='password'
+                  label='Password'
+                  type='password'
+                  id='password'
+                  autoComplete='current-password'
                   onChange={e => setForm({ ...form, password: e.target.value })}
                 />
                 <Button
-                  type="submit"
+                  type='submit'
                   fullWidth
-                  variant="contained"
-                  color="primary"
+                  variant='contained'
+                  color='primary'
                   className={classes.submit}
                 >
                   Sign In
                 </Button>
                 <Grid container>
                   <Grid item>
-                    <Link to="/signIn" variant="body2">
+                    <Link to='/signIn' variant='body2'>
                       {"Don't have an account? Sign Up"}
                     </Link>
                   </Grid>
