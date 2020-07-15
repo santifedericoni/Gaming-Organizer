@@ -1,5 +1,9 @@
 import React from "react";
-import { makeStyles, createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import {
+  makeStyles,
+  createMuiTheme,
+  MuiThemeProvider,
+} from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -10,6 +14,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -50,54 +55,59 @@ export default function MenuAppBar(props) {
 
   let handleSubmit = e => {
     e.preventDefault();
-    props.props.setUserState({
-      userId: 0,
-      login: false,
-      mail: "",
-    });
+
+    axios
+      .get(`/auth/logout`)
+      .then(res => {
+        console.log(res);
+        props.props.setUserState({
+          userId: 0,
+          login: false,
+          mail: "",
+        });
+      })
+      .catch(err => console.log(err));
   };
 
   return (
     <div className={classes.root}>
       <MuiThemeProvider theme={theme}>
         <FormGroup></FormGroup>
-        <AppBar position="static">
+        <AppBar position='static'>
           <Toolbar>
             {/* <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon> test</MenuIcon> 
           </IconButton> */}
-            <Typography variant="h6" className={classes.title}>
+            <Typography variant='h6' className={classes.title}>
               Game Organizer
             </Typography>
-            <Button color="inherit">
-              <Link to="/platforms" className="button">
+            <Link to='/platforms'>
+              <Button className='button' color='inherit'>
                 Add Platforms
-              </Link>
-            </Button>
-            <Button color="inherit">
-              <Link to="/search" className="button">
-                search
-              </Link>
-            </Button>
+              </Button>
+            </Link>
+            <Link to='/search' className='button'>
+              <Button color='inherit'>search</Button>
+            </Link>
             {auth && (
               <div>
                 <IconButton
-                  aria-label="account of current user"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
+                  aria-label='account of current user'
+                  aria-controls='menu-appbar'
+                  aria-haspopup='true'
                   onClick={handleMenu}
-                  color="inherit"
+                  color='inherit'
                 >
                   {/* {props.props.userState.mail} */}
                   <AccountCircle />
                 </IconButton>
-                <Button to="/login" color="inherit" onClick={handleSubmit}>
-                  <Link to="/login" className="button">
+                <Link to='/logout' className='button'>
+                  <Button color='inherit' onClick={handleSubmit}>
                     Logout
-                  </Link>
-                </Button>
+                  </Button>
+                </Link>
                 <Menu
-                  id="menu-appbar"
+                  id='menu-appbar'
                   anchorEl={anchorEl}
                   anchorOrigin={{
                     vertical: "top",
@@ -112,7 +122,7 @@ export default function MenuAppBar(props) {
                   onClose={handleClose}
                 >
                   <MenuItem onClick={handleClose}>
-                    <Link to="/profile">Profile</Link>
+                    <Link to='/profile'>Profile</Link>
                   </MenuItem>
                   <MenuItem onClick={handleClose}>My account</MenuItem>
                 </Menu>
