@@ -4,22 +4,12 @@ const App = Express();
 const BodyParser = require('body-parser');
 const db = require('./db/index');
 const PORT = 8080;
-const Session = require('express-session')
-const FileStore = require('session-file-store')(Session);
-
 
 // Express Configuration
 // App.use(cors());
 App.use(BodyParser.urlencoded({ extended: false }));
 App.use(Express.static('public'));
 App.use(BodyParser.json());
-
-App.use(Session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  store: new FileStore()
-}));
 
 // Sample GET route
 App.get('/api/data', (req, res) => res.json({

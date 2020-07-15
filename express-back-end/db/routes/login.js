@@ -1,21 +1,43 @@
 const express = require("express");
 const router = express.Router();
+const session = require("express-session");
+const FileStore = require("session-file-store")(session);
+const passport = require("passport"),
+  LocalStrategy = require("passport-local").Strategy;
 
 module.exports = db => {
-  const passport = require("passport"),
-    LocalStrategy = require("passport-local").Strategy;
+  router.use(
+    session({
+      secret: "keyboard cat",
+      resave: false,
+      saveUninitialized: true,
+      store: new FileStore(),
+    })
+  );
 
   router.use(passport.initialize());
   router.use(passport.session());
 
   passport.serializeUser((user, done) => {
-    // done(null, user.id);
+    console.log("serialize: ", user);
+    done(null, user.email);
   });
 
   passport.deserializeUser((id, done) => {
-    // User.findById(id, function(err, user) {
-    //   done(err, user);
-    // });
+    console.log("deserialize: ", id);
+
+    let query = `
+            SELECT * FROM users WHERE id = $1;
+            `;
+
+    db.query(query, [id])
+      .then(data => {
+        console.log(data.rows[0]);
+        done(null, data.rows[0]);
+      })
+      .catch(err => {
+        done(err, null);
+      });
   });
 
   passport.use(
@@ -32,10 +54,9 @@ module.exports = db => {
 
         db.query(query, values)
           .then(data => {
-            if (!data.rows.length) {
+            if (!data.rowCount) {
               return done(null, false, { msg: "Invalid email or password" });
             }
-            console.log(data.rows[0]);
             return done(null, data.rows[0]);
           })
           .catch(err => {
@@ -46,11 +67,11 @@ module.exports = db => {
   );
 
   router.post("/login_process", passport.authenticate("local"), (req, res) => {
-    const path = {};
+    console.log("yes!");
     if (req.user) {
-      path.redirect = "/";
+      return res.json({ redirect: "/" });
     } else {
-      path.redirect = "/login";
+      return res.json({ redirect: "/login" });
     }
   });
 
