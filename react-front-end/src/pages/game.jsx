@@ -94,10 +94,15 @@ export default function MainPage(props) {
   };
 
   const handleSubmitWishList = e => {
-    console.log("whislist");
     const data = resultState.data;
+    const userId = props.userState.userId
     e.preventDefault();
-    axios.post(`/api/game/addWishList`, { data }).then(res => {});
+
+    if (!isValid) {
+      alert("Please select at least one platform to be added.");
+    } else {
+      axios.post(`/api/game/addWishList`, { data, platforms, userId }).then(res => {});
+    }
   };
 
   const getGame = () => {

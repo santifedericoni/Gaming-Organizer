@@ -7,5 +7,7 @@ CREATE TABLE games
   api_id VARCHAR(255),
   name VARCHAR(255) NOT NULL,
   genre VARCHAR(255) NOT NULL,
-  description VARCHAR(MAX) NOT NULL
+  description text NOT NULL,
+  wish_list boolean NOT NULL,
+  active boolean NOT NULL
 );
