@@ -5,7 +5,11 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles, createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import {
+  makeStyles,
+  createMuiTheme,
+  MuiThemeProvider,
+} from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import SportsEsportsIcon from "@material-ui/icons/SportsEsports";
 import green from "@material-ui/core/colors/green";
@@ -56,17 +60,22 @@ export default function SignIn(props) {
   });
   let handleSubmit = e => {
     e.preventDefault();
-    axios.post(`/api/user/login`, { form }).then(res => {
-      if (res.data.user.length > 0) {
-        props.setUserState({
-          name: res.data.user[0].name,
-          lastName: res.data.user[0].lastname,
-          userId: res.data.user[0].id,
-          login: true,
-          mail: res.data.user[0].email,
-        });
+    axios.post(`/auth/login_process`, { form }).then(res => {
+      const user = res.data.user;
+      if (!user) {
+        alert("retrieved no data");
       } else {
-        alert("invalid data");
+        if (user.length > 0) {
+          props.setUserState({
+            name: user[0].name,
+            lastName: user[0].lastname,
+            userId: user[0].id,
+            login: true,
+            mail: user[0].email,
+          });
+        } else {
+          alert("invalid data");
+        }
       }
     });
   };
