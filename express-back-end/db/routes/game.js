@@ -14,19 +14,23 @@ module.exports = (db) => {
 
 
     const insertGamePlatform = function (platforms,gameId){
-      for (let i = 0; i < platforms.length; i++){
-        let values = [gameId,platforms[i].id,'test','test']
+      let insertValue = '';
+      let suffix = ",";
+      for (const platform in platforms) {
+        if (parseInt(platform) === platforms.length - 1) {
+          suffix = ";";
+        }
+        insertValue += `(${gameId}, ${platforms[platform].id})${suffix}`;
+      }
         let query = `      
-        INSERT INTO games_platforms (game_id, platform_id , name , genre)
-        VALUES ($1, $2, $3, $4) RETURNING *;`
-        
-        db.query(query,values)
+        INSERT INTO games_platforms (game_id, platform_id )
+        VALUES ${insertValue}`;
+              
+        db.query(query)
         .then((data) => {
         })
         .catch((err) => {
-
         })
-      }
     }
 
     const getPlatformsID = function (gameID){
@@ -41,10 +45,9 @@ module.exports = (db) => {
         let query2 = `select id from platforms where name in (${insertPlatform});` 
         db.query(query2)
               .then((data) => {
-                insertGamePlatform(data.rows,gameID)
+                  insertGamePlatform(data.rows,gameID)
           })
           .catch((err) => {
-            console.log(err)
             res.status(500).json({ error: err.message });
           });
     }
@@ -61,7 +64,6 @@ module.exports = (db) => {
         res.json({ game });
       })
       .catch((err) => {
-        console.log(err)
         res.status(500).json({ error: err.message });
       });
   });
