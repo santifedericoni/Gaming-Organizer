@@ -51,18 +51,23 @@ const theme = createMuiTheme({
 
 
 export default function app(props) {
+  console.log(props)
   const classes = useStyles();
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(props.gameSearch.name);
   const [results, setResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
-    
 
   useEffect(
     () => {
       if (debouncedSearchTerm) {
         setIsSearching(true);
         searchGame(debouncedSearchTerm).then(results => {
+          props.setGameSearch
+          ({
+                  ...props.gameSearch,
+                  name: searchTerm,
+                });
           setIsSearching(false);
           setResults(results);
         });
@@ -88,6 +93,7 @@ export default function app(props) {
           label="Find a Game"
           name="findGame"
           autoComplete="fGame"
+          value= {searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
         />
         {isSearching && <div> <CircularProgress /></div>}

@@ -26,6 +26,11 @@ export default function App() {
     name: "",
   });
 
+  const [gameSearch, setGameSearch] = useState({
+    name: "",
+  });
+
+
   return (
     <Router>
       <AppBar userState={userState} setUserState={setUserState} />
@@ -53,6 +58,8 @@ export default function App() {
             setUserState={setUserState}
             gameState={gameState}
             setGameState={setGameState}
+            gameSearch={gameSearch}
+            setGameSearch={setGameSearch}
           />
         </Route>
         <Route exact path="/game">
@@ -61,6 +68,8 @@ export default function App() {
             setUserState={setUserState}
             gameState={gameState}
             setGameState={setGameState}
+            gameSearch={gameSearch}
+            setGameSearch={setGameSearch}
           />
         </Route>
       </Switch>

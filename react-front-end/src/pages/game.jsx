@@ -8,12 +8,14 @@ import {
 } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
 
 export default function MainPage(props) {
   const [resultState, setResultState] = useState({
     description: "",
   });
-
+  console.log('props', props)
   const [platforms, setPlatforms] = useState([]);
 
   const [isValid, setValid] = useState(false);
@@ -211,6 +213,11 @@ export default function MainPage(props) {
                   add to wishlist
                 </Button>
               </Grid>
+              <Link to='/search'>
+              <Button className='button' color='inherit'>
+                Back to Search
+              </Button>
+            </Link>
             </Grid>
           </Container>
         </div>
