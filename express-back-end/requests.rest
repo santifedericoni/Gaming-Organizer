@@ -1,0 +1,29 @@
+GET http://localhost:3000/
+Authorization: Bearer
+
+###
+
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "Jason"
+}
+
+###
+
+POST http://localhost:8080/api/auth/token
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTU1Mjc3NDR9.xVrfeCqz4MrcClFp8b9EOJDk3ApHTtC615kCVgWqy-E"
+}
+
+###
+
+DELETE http://localhost:8080/api/auth/logout
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTU1Mjc3NDR9.xVrfeCqz4MrcClFp8b9EOJDk3ApHTtC615kCVgWqy-E"
+}

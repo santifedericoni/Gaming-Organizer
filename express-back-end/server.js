@@ -2,8 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const session = require("express-session");
-const FileStore = require("session-file-store")(session);
 const db = require("./db/index");
 const PORT = 8080;
 
@@ -15,14 +13,14 @@ app.use(bodyParser.json());
 // app.use(cors());
 
 // session config
-app.use(
-  session({
-    secret: "keyboard cat",
-    resave: false,
-    saveUninitialized: true,
-    store: new FileStore(),
-  })
-);
+// app.use(
+//   session({
+//     secret: "keyboard cat",
+//     resave: false,
+//     saveUninitialized: true,
+//     store: new FileStore(),
+//   })
+// );
 
 // Sample GET route
 app.get("/api/data", (req, res) =>
@@ -36,11 +34,11 @@ const passport = require("./lib/passport")(db, app);
 
 const usersQueries = require("./db/routes/user")(db);
 const gamesQueries = require("./db/routes/game")(db);
-const authRouter = require("./db/routes/auth")(passport);
+const authQueries = require("./db/routes/auth")(db);
 
 app.use("/api/user", usersQueries);
 app.use("/api/game", gamesQueries);
-app.use("/auth", authRouter);
+app.use("/api/auth", authQueries);
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
