@@ -1,7 +1,8 @@
 import React, { useState, useEffect, Component } from "react";
 import axios from "axios";
+import { withRouter } from "react-router";
 
-export default function AuthComponent(props) {
+const AuthComponent = (props) => {
   const [user, setUser] = useState(undefined);
 
   useEffect(() => {
@@ -25,3 +26,5 @@ export default function AuthComponent(props) {
 
   return <Component>Successfully Authenticated</Component>;
 }
+
+export default withRouter(AuthComponent);
