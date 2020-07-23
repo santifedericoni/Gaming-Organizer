@@ -13,10 +13,15 @@ export default function AuthComponent(props) {
     axios
       .get("/getUser", { headers: { Authorization: `Bearer ${jwt}` } })
       .then(res => setUser(res.data))
-      .catch(err => props.history.push("/login"));
+      .catch(err => {
+        localStorage.removeItem("jwt-token");
+        props.history.push("/login");
+      });
   }, []);
 
-  return (
-    <Component>Successfully Authenticated</Component>
-  );
+  if (user === undefined) {
+    return <div>user undefined</div>;
+  }
+
+  return <Component>Successfully Authenticated</Component>;
 }
