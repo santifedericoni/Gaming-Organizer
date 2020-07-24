@@ -1,26 +1,19 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
+const passport = require("./config/passport");
 const app = express();
 const bodyParser = require("body-parser");
 const db = require("./db/index");
 const PORT = 8080;
 
 // express config
-
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-// app.use(cors());
+app.use(cors());
 
-// session config
-// app.use(
-//   session({
-//     secret: "keyboard cat",
-//     resave: false,
-//     saveUninitialized: true,
-//     store: new FileStore(),
-//   })
-// );
+app.use(passport.initialize());
 
 // Sample GET route
 app.get("/api/data", (req, res) =>
@@ -30,7 +23,7 @@ app.get("/api/data", (req, res) =>
 );
 
 // import passport.js for authentication middleware
-const passport = require("./lib/passport")(db, app);
+// const passport = require("./lib/passport")(db, app);
 
 const usersQueries = require("./db/routes/user")(db);
 const gamesQueries = require("./db/routes/game")(db);
