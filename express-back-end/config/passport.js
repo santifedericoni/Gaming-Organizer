@@ -1,52 +1,55 @@
-const passport = require('passport');
-const passportJWT = require('passport-jwt');
+const passport = require("passport");
+const passportJWT = require("passport-jwt");
 const JwtStrategy = passportJWT.Strategy;
 const ExtractJwt = passportJWT.ExtractJwt;
-const User = require('../models/user');
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.SECRET_OR_KEY
+  secretOrKey: process.env.SECRET_OR_KEY,
 };
+const db = require("../db/index");
 
 const strategy = new JwtStrategy(options, (payload, next) => {
-  User.forge({ id: payload.id}).fetch().then(res => {
+  let query = `SELECT * FROM users WHERE id = $1`;
+  console.log("payload id: ", payload.id);
+  db.query(query, [payload.id]).then(res => {
+    console.log("resssss: ", res.rows[0]);
     next(null, res);
-  })
-})
+  });
+});
 
 passport.use(strategy);
 
 module.exports = passport;
-  // const passport = require("passport"),
-  //   LocalStrategy = require("passport-local").Strategy;
+// const passport = require("passport"),
+//   LocalStrategy = require("passport-local").Strategy;
 
-  // // initialize passport and use session
-  // app.use(passport.initialize());
-  // app.use(passport.session());
+// // initialize passport and use session
+// app.use(passport.initialize());
+// app.use(passport.session());
 
-  // // serialize user data with session only once when logged in
-  // passport.serializeUser((user, done) => {
-  //   console.log("serialize: ", user);
-  //   done(null, user.email);
-  // });
+// // serialize user data with session only once when logged in
+// passport.serializeUser((user, done) => {
+//   console.log("serialize: ", user);
+//   done(null, user.email);
+// });
 
-  // // deserialize user data with session 
-  // passport.deserializeUser((id, done) => {
-  //   console.log("deserialize: ", id);
+// // deserialize user data with session
+// passport.deserializeUser((id, done) => {
+//   console.log("deserialize: ", id);
 
-  //   let query = `
-  //           SELECT * FROM users WHERE email = $1;
-  //           `;
+//   let query = `
+//           SELECT * FROM users WHERE email = $1;
+//           `;
 
-  //   db.query(query, [id])
-  //     .then(data => {
-  //       console.log(data.rows[0]);
-  //       done(null, data.rows[0]);
-  //     })
-  //     .catch(err => {
-  //       done(err, null);
-  //     });
-  // });
+//   db.query(query, [id])
+//     .then(data => {
+//       console.log(data.rows[0]);
+//       done(null, data.rows[0]);
+//     })
+//     .catch(err => {
+//       done(err, null);
+//     });
+// });
 
 //   passport.use(
 //     new LocalStrategy(
