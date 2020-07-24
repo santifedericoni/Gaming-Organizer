@@ -9,6 +9,7 @@
     "go": "nodemon server.js"
   },
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.18.3",
     "connect-flash": "^0.1.1",
     "cors": "^2.8.5",
@@ -16,6 +17,7 @@
     "express": "^4.16.4",
     "express-session": "^1.17.1",
     "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "pg": "^8.2.1",
     "session-file-store": "^1.4.0"
