@@ -13,17 +13,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
+// use passport.js
 app.use(passport.initialize());
-
-// Sample GET route
-app.get("/api/data", (req, res) =>
-  res.json({
-    message: "Seems to work!",
-  })
-);
-
-// import passport.js for authentication middleware
-// const passport = require("./lib/passport")(db, app);
 
 const usersQueries = require("./db/routes/user")(db);
 const gamesQueries = require("./db/routes/game")(db);

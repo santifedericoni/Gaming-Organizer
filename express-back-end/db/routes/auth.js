@@ -3,74 +3,29 @@ const passport = require("../../config/passport");
 const jwt = require("jsonwebtoken");
 
 module.exports = db => {
-  // const authenticateToken = (req, res, next) => {
-  //   const authHeader = req.headers["authorization"];
-  //   const token = authHeader && authHeader.split(" ")[1];
-  //   if (!token) return res.sendStatus(401);
-
-  //   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-  //     if (err) return res.sendStatus(403);
-  //     req.user = user;
-  //     next();
-  //   });
-  // };
-
-  // const generateAccessToken = user => {
-  //   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-  //     expiresIn: "15s",
-  //   });
-  // };
-
-  // const generateRefreshToken = user => {
-  //   return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
-  // };
-
-  // router.post(
-  //   // "/login_process",
-  //   // passport.authenticate("local"),
-  //   // (req, res) => {
-  //   //   if (req.user) {
-  //   //     req.user.redirect = "/";
-  //   //     res.json(req.user);
-  //   //   } else {
-  //   //     res.json({ redirect: "/login" });
-  //   //   }
-  //   // }
-  //   "/getToken",
-  //   (req, res) => {
-  //     const username = req.body.email;
-  //     const user = { name: username };
-
-  //     const accessToken = generateAccessToken(user);
-  //     const refreshToken = generateRefreshToken(user);
-  //     refreshTokens.push(refreshToken);
-  //     res.json({ accessToken, refreshToken });
-  //   }
-  // );
-
+  // validation and issue JWT
   router.post("/getToken", (req, res) => {
-    // validation
-
     const email = req.body.email;
     const password = req.body.password;
     if (!email || !password) {
       return res.status(401).send("no fields");
     }
     // build db query and execute
-    let query = `
+    let emailChkQuery = `
             SELECT * FROM users WHERE email = $1;
             `;
 
-    db.query(query, [email]).then(data => {
+    db.query(emailChkQuery, [email]).then(data => {
       if (!data.rows[0]) {
         return res.status(400).send("user not found");
       }
-      let query = `SELECT * FROM users WHERE email = $1 and password = $2`;
-      db.query(query, [email, password])
+      let pwdChkQuery = `SELECT * FROM users WHERE email = $1 and password = $2`;
+      db.query(pwdChkQuery, [email, password])
         .then(user => {
           if (!user.rows[0]) {
             return res.status(401).send("invalid password");
           }
+          // create and send JWT
           const payload = { id: user.rows[0].id };
           const token = jwt.sign(payload, process.env.SECRET_OR_KEY);
           res.send(token);
@@ -89,6 +44,7 @@ module.exports = db => {
     }
   );
 
+  // check if userid exists in payload. Check auth status for every user HTTP request
   router.get(
     "/getUser",
     passport.authenticate("jwt", { session: false }),
@@ -97,26 +53,11 @@ module.exports = db => {
     }
   );
 
-  // let refreshTokens = [];
-
-  // router.post("/token", (req, res) => {
-  //   const refreshToken = req.body.token;
-  //   if (!refreshToken) return res.sendStatus(401);
-  //   if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403);
-  //   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-  //     if (err) return res.sendStatus(403);
-  //     const accessToken = generateAccessToken({ name: user.name });
-  //     res.json({ accessToken });
-  //   });
-  // });
-
+  // remove JWT upon logout
   router.delete("/logout", (req, res) => {
     // refreshTokens = refreshTokens.filter(token => token !== req.body.token);
-    // res.sendStatus(204);
-    // req.logout();
-    // req.session.save(() => {
-    //   res.redirect("/");
-    // });
+    res.sendStatus(204);
+    req.logout();
   });
 
   return router;
