@@ -14,7 +14,7 @@ import Container from "@material-ui/core/Container";
 import SportsEsportsIcon from "@material-ui/icons/SportsEsports";
 import green from "@material-ui/core/colors/green";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Profile from "./profile";
 
 const useStyles = makeStyles(theme => ({
@@ -52,7 +52,7 @@ const theme = createMuiTheme({
   },
 });
 
-export default function SignIn(props) {
+const SignIn = props => {
   const classes = useStyles();
   const [form, setForm] = React.useState({
     email: "",
@@ -64,26 +64,28 @@ export default function SignIn(props) {
       return alert("please enter your email and password");
     }
 
-    return axios
-      .post(`/auth/login_process`, form)
+    axios
+      .post(`/api/auth/getToken`, form)
       .then(res => {
-        const user = res.data;
-        if (user.redirect === "/") {
-          console.log("/", res);
-          // window.location = "/";
-          props.setUserState({
-            name: user.name,
-            lastName: user.lastname,
-            userId: user.id,
-            login: true,
-            mail: user.email,
-          });
-        } else if (user.redirect === "/login") {
-          console.log("else if ");
-          console.log("/login", res);
+        localStorage.setItem('jwt-token', res.data);
+        props.history.push('/Protected');
+        // const user = res.data;
+        // if (user.redirect === "/") {
+        //   console.log("/", res);
+        //   // window.location = "/";
+        //   props.setUserState({
+        //     name: user.name,
+        //     lastName: user.lastname,
+        //     userId: user.id,
+        //     login: true,
+        //     mail: user.email,
+        //   });
+        // } else if (user.redirect === "/login") {
+        //   console.log("else if ");
+        //   console.log("/login", res);
 
-          // window.location = "login";
-        }
+        //   // window.location = "login";
+        // }
         // const user = res.data.user;
         // if (!user) {
         //   alert("retrieved no data");
@@ -102,7 +104,7 @@ export default function SignIn(props) {
         // }
       })
       .catch(err => {
-        alert("invalid email or password");
+        alert(err, "invalid email or password");
         // window.location = "/login";
       });
   };
@@ -174,3 +176,5 @@ export default function SignIn(props) {
     return <h1>loading</h1>;
   }
 }
+
+export default withRouter(SignIn);
