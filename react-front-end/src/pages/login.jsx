@@ -67,45 +67,13 @@ const SignIn = props => {
     axios
       .post(`/api/auth/getToken`, form)
       .then(res => {
-        localStorage.setItem('jwt-token', res.data);
-        props.history.push('/Protected');
-        // const user = res.data;
-        // if (user.redirect === "/") {
-        //   console.log("/", res);
-        //   // window.location = "/";
-        //   props.setUserState({
-        //     name: user.name,
-        //     lastName: user.lastname,
-        //     userId: user.id,
-        //     login: true,
-        //     mail: user.email,
-        //   });
-        // } else if (user.redirect === "/login") {
-        //   console.log("else if ");
-        //   console.log("/login", res);
-
-        //   // window.location = "login";
-        // }
-        // const user = res.data.user;
-        // if (!user) {
-        //   alert("retrieved no data");
-        // } else {
-        //   if (user.length > 0) {
-        //     props.setUserState({
-        //       name: user[0].name,
-        //       lastName: user[0].lastname,
-        //       userId: user[0].id,
-        //       login: true,
-        //       mail: user[0].email,
-        //     });
-        //   } else {
-        //     alert("invalid data");
-        //   }
-        // }
+        localStorage.setItem("jwt-token", res.data);
+        props.history.push("/protected");
       })
       .catch(err => {
         alert(err, "invalid email or password");
-        // window.location = "/login";
+        localStorage.removeItem("jwt-token");
+        props.history.push("/login");
       });
   };
 
@@ -175,6 +143,6 @@ const SignIn = props => {
   } else {
     return <h1>loading</h1>;
   }
-}
+};
 
 export default withRouter(SignIn);
