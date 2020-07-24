@@ -1,30 +1,41 @@
 import React, { useState, useEffect, Component } from "react";
 import axios from "axios";
 import { withRouter } from "react-router";
+import getJwt from "../helpers/getJwt";
 
-const AuthComponent = (props) => {
-  const [user, setUser] = useState(undefined);
+const AuthBox = props => {
+  const [user, setUser] = useState({});
 
-  useEffect(() => {
-    const jwt = localStorage.getItem("jwt-token");
+  const getUser = () => {
+    const jwt = getJwt();
+    console.log("jwt Authbox: ", jwt);
     if (!jwt) {
-      props.history.push("/login");
+      setUser(null);
+      return;
     }
-
     axios
-      .get("/getUser", { headers: { Authorization: `Bearer ${jwt}` } })
-      .then(res => setUser(res.data))
+      .get("/api/auth/getUser", { headers: { Authorization: jwt } })
+      .then(res => {
+        console.log("getUser: ", res.data);
+        setUser(res.data);
+      })
       .catch(err => {
+        console.log("err, ", err);
         localStorage.removeItem("jwt-token");
         props.history.push("/login");
       });
+  };
+
+  useEffect(() => {
+    getUser();
   }, []);
 
+
   if (user === undefined) {
-    return <div>user undefined</div>;
+    return (<div>user undefined</div>);
   }
 
-  return <Component>Successfully Authenticated</Component>;
+  return <div>hello</div>;
 }
 
-export default withRouter(AuthComponent);
+export default withRouter(AuthBox);
