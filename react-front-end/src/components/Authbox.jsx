@@ -18,6 +18,9 @@ const AuthBox = props => {
       .get("/api/auth/getUser", { headers: { Authorization: jwt } })
       .then(res => {
         setUser(res.data);
+        console.log(res.data);
+        props.setUserState(res.data);
+        console.log(props.userState);
       })
       .catch(err => {
         // remove JWT and redirect to /login
@@ -33,9 +36,9 @@ const AuthBox = props => {
   // render
   if (user === undefined) {
     return <div>user undefined</div>;
+  } else {
+    return <div>hello</div>;
   }
-
-  return <div>hello</div>;
 };
 
 export default withRouter(AuthBox);

@@ -68,7 +68,7 @@ const SignIn = props => {
       .post(`/api/auth/getToken`, form)
       .then(res => {
         localStorage.setItem("jwt-token", res.data);
-        props.history.push("/protected");
+        props.history.push("/profile");
       })
       .catch(err => {
         alert(err, "invalid email or password");

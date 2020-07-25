@@ -57,7 +57,7 @@ export default function MenuAppBar(props) {
     e.preventDefault();
 
     axios
-      .get(`/auth/logout`)
+      .delete(`/api/auth/logout`)
       .then(res => {
         console.log(res);
         props.props.setUserState({
@@ -65,6 +65,7 @@ export default function MenuAppBar(props) {
           login: false,
           mail: "",
         });
+        localStorage.removeItem("jwt-token");
       })
       .catch(err => console.log(err));
   };

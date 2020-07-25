@@ -73,7 +73,7 @@ export default function App() {
             setGameSearch={setGameSearch}
           />
         </Route>
-        <AuthBox>
+        <AuthBox userState={userState} setUserState={setUserState}>
           <Route path='/protected' component={Protected} />
         </AuthBox>
       </Switch>

@@ -17,7 +17,7 @@ module.exports = db => {
 
     db.query(emailChkQuery, [email]).then(data => {
       if (!data.rows[0]) {
-        return res.status(400).send("user not found");
+        return res.status(401).send("user not found");
       }
       let pwdChkQuery = `SELECT * FROM users WHERE email = $1 and password = $2`;
       db.query(pwdChkQuery, [email, password])
