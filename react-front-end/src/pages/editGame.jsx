@@ -75,9 +75,7 @@ export default function MainPage(props) {
     }
   };
 
-console.log(props)
   const getGame = () => {
-    console.log(props.game)
     var proxyUrl = "https://cors-anywhere.herokuapp.com/",
       targetUrl = `https://api.rawg.io/api/games/${props.game}`;
     fetch(proxyUrl + targetUrl)
@@ -129,7 +127,7 @@ console.log(props)
           />
           <p> {resultState.data.description_raw}</p> <br />
           <div>
-            <h1 className={classes.title}>Select your platformsaaaaa</h1>
+            <h1 className={classes.title}>Select your platform</h1>
           </div>
           <div>
             <Grid container spacing={1}>
