@@ -34,7 +34,6 @@ export default function CheckboxesGroup(props) {
   const { PS4, Xbox_one, Switch, PC } = state;
   // const error = [PS4, Xbox_one, Switch, PC].filter((v) => v).length !== 2;
 
-  console.log("props platforms", state);
   if (props.userState) {
     if (props.userState.login === true) {
       return (

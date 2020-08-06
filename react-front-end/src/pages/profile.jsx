@@ -60,7 +60,6 @@ const theme = createMuiTheme({
 });
 export default function SignUp(props) {
   const classes = useStyles();
-  console.log('profile props',props.props.userState)
   const [form, setForm] = React.useState({
     name: props.props.userState.name,
     lastName: props.props.userState.lastName,

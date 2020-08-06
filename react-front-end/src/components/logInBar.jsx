@@ -59,7 +59,6 @@ export default function MenuAppBar(props) {
     axios
       .get(`/auth/logout`)
       .then(res => {
-        console.log(res);
         props.props.setUserState({
           userId: 0,
           login: false,

@@ -51,7 +51,6 @@ const theme = createMuiTheme({
 
 
 export default function app(props) {
-  console.log(props)
   const classes = useStyles();
   const [searchTerm, setSearchTerm] = useState(props.gameSearch.name);
   const [results, setResults] = useState([]);

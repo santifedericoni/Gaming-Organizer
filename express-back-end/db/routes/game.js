@@ -134,6 +134,21 @@ module.exports = (db) => {
       });
   });
 
-
+  router.post('/', (req,res) => {
+    if (req.body.gameData !== undefined){
+      let query = `
+      SELECT * FROM games WHERE user_id = ${req.user.id} AND api_id = '${req.body.gameData.id}'
+      `;
+      db.query(query)
+        .then(data => {
+          res.json({ data });
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
+      }
+    });
   return router;
 };

@@ -9,13 +9,13 @@ import {
 import CircularProgress from "@material-ui/core/CircularProgress";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import EditGame from "./editGame"; 
 
 export default function MainPage(props) {
   const [resultState, setResultState] = useState({
     description: "",
   });
   const [platforms, setPlatforms] = useState([]);
+  const [editState, setEditState] = useState(false);
   const [isValid, setValid] = useState(false);
   const [loadingState, setLoadingState] = useState(
     {
@@ -92,21 +92,11 @@ export default function MainPage(props) {
     }
   };
 
-  const handleSubmitWishList = e => {
-    const data = resultState.data;
-    const userId = props.userState.userId
-    e.preventDefault();
-
-    if (!isValid) {
-      alert("Please select at least one platform to be added.");
-    } else {
-      axios.post(`/api/game/addWishList`, { data, platforms, userId }).then(res => {});
-    }
-  };
 
   const getGame = () => {
+    console.log(props.game)
     var proxyUrl = "https://cors-anywhere.herokuapp.com/",
-      targetUrl = `https://api.rawg.io/api/games/${props.gameState.name}`;
+      targetUrl = `https://api.rawg.io/api/games/${props.game}`;
     fetch(proxyUrl + targetUrl)
       .then(blob => blob.json())
       .then(data => {
@@ -123,21 +113,7 @@ export default function MainPage(props) {
       });
   };
 
-  const getEditGame = () => {
-    let gameData = resultState.data;
-    return axios
-      .post(`/api/game/`, {platforms, gameData})
-      .then (res => {
-        if (res.data.data.rows.length > 0){
-          return true
-        } else {
-          return false
-        }
-      })
-
-  }
-
-
+  
   if (loadingState.loading === true) {
     getGame();
   }
@@ -156,11 +132,6 @@ export default function MainPage(props) {
         </Grid>
       </Container>
     );
-  } else if (getEditGame()){
-    let game = props.gameState.name;
-    return (
-      <EditGame game={game}/>
-    );
   } else {
     return (
       <Container component="main" maxWidth="md">
@@ -175,7 +146,7 @@ export default function MainPage(props) {
           />
           <p> {resultState.data.description_raw}</p> <br />
           <div>
-            <h1 className={classes.title}>Select your platforms</h1>
+            <h1 className={classes.title}>Select your platformsaaaaa</h1>
           </div>
           <div>
             <Grid container spacing={1}>
@@ -214,20 +185,7 @@ export default function MainPage(props) {
                   onClick={handleSubmit}
                   disabled={!isValid}
                 >
-                  add to list
-                </Button>
-              </Grid>
-              <Grid item xs={4}>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="default"
-                  className={classes.submit}
-                  onClick={handleSubmitWishList}
-                  disabled={!isValid}
-                >
-                  add to wishlist
+                  Edit Game
                 </Button>
               </Grid>
               <Link to='/search'>

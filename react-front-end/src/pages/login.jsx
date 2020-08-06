@@ -69,7 +69,6 @@ export default function SignIn(props) {
       .then(res => {
         const user = res.data;
         if (user.redirect === "/") {
-          console.log("/", res);
           // window.location = "/";
           props.setUserState({
             name: user.name,
@@ -79,8 +78,8 @@ export default function SignIn(props) {
             mail: user.email,
           });
         } else if (user.redirect === "/login") {
-          console.log("else if ");
-          console.log("/login", res);
+          //console.log("else if ");
+          //console.log("/login", res);
 
           // window.location = "login";
         }
