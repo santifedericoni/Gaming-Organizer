@@ -15,7 +15,6 @@ export default function MainPage(props) {
     description: "",
   });
   const [platforms, setPlatforms] = useState([]);
-  const [editState, setEditState] = useState(false);
   const [isValid, setValid] = useState(false);
   const [loadingState, setLoadingState] = useState(
     {
@@ -40,22 +39,6 @@ export default function MainPage(props) {
   }));
 
   const classes = useStyles();
-
-  // ALTERNATE SOLUTION to handle checkbox state, using backend to get list of platform names in kv
-  // const platformsSelected = val => {
-  //   if (platforms[val.platform.name] === true) {
-  //     setPlatforms({
-  //       ...platforms,
-  //       [val.platform.name]: false,
-  //     });
-  //   } else {
-  //     setPlatforms({
-  //       ...platforms,
-  //       [val.platform.name]: true,
-  //     });
-  //   }
-  //   console.log("test", platforms);
-  // };
 
   const handleCheck = e => {
     const platformName = e.target.name;
@@ -92,7 +75,7 @@ export default function MainPage(props) {
     }
   };
 
-
+console.log(props)
   const getGame = () => {
     console.log(props.game)
     var proxyUrl = "https://cors-anywhere.herokuapp.com/",

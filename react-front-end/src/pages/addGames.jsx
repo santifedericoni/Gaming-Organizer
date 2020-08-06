@@ -1,88 +1,185 @@
-// const getGame = () => {
-//     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-//       targetUrl = `https://api.rawg.io/api/games?search=secret of monkey`
-//       fetch(proxyUrl + targetUrl)
-//         .then(blob => blob.json())
-//         .then(data => {
-//           console.log(data)
-//       return data;
-//     })
-//     .catch(e => {
-//       console.log(e);
-//       return e;
-//     });
-//   }
+import React, { useState } from "react";
+import {
+  Container,
+  Checkbox,
+  Grid,
+  Button,
+  makeStyles,
+} from "@material-ui/core";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
-//   getGame();
-import React from 'react';
-import Toolbar from '@material-ui/core/Toolbar';
-import InputBase from '@material-ui/core/InputBase';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
-
-const useStyles = makeStyles((theme) => ({
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.black, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+export default function MainPage(props) {
+  const [resultState, setResultState] = useState({
+    description: "",
+  });
+  const [platforms, setPlatforms] = useState([]);
+  const [isValid, setValid] = useState(false);
+  const [loadingState, setLoadingState] = useState(
+    {
+      loading: true,
     },
-    marginLeft: 100,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto',
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputRoot: {
-    color: 'inherit',
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
-      },
-    },
-  },
-}));
+    []
+  );
 
+  const useStyles = makeStyles(theme => ({
+    submit: {
+      background: "#1B4D3E",
+      borderRadius: 3,
+      border: 0,
+      color: "white",
+      height: 48,
+      padding: "0 30px",
+      boxShadow: "0 3px 5px 2px rgba(255, 255, 255, .3)",
+    },
+    title: {
+      margin: "0 0 0 30%",
+    },
+  }));
 
-export default function SearchAppBar() {
   const classes = useStyles();
 
-  return (
-    <div className={classes.root}>
-        <Toolbar>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
+  const handleCheck = e => {
+    const platformName = e.target.name;
+    const isChecked = e.target.checked;
+
+    if (isChecked) {
+      setPlatforms([...platforms, platformName]);
+      setValid(true);
+    } else {
+      for (const name of platforms) {
+        if (platformName === name) {
+          const index = platforms.indexOf(platformName);
+          if (index > -1) {
+            platforms.splice(index, 1);
+          }
+          if (platforms.length === 0) {
+            setValid(false);
+          }
+          break;
+        }
+      }
+    }
+  };
+
+  const handleSubmit = e => {
+    const data = resultState.data;
+    const userId = props.userState.userId
+    e.preventDefault();
+
+    if (!isValid) {
+      alert("Please select at least one platform to be added.");
+    } else {
+      axios.post(`/api/game/addList`, { data, platforms, userId }).then(res => {});
+    }
+  };
+
+
+  const getGame = () => {
+    console.log(props.game)
+    var proxyUrl = "https://cors-anywhere.herokuapp.com/",
+      targetUrl = `https://api.rawg.io/api/games/${props.game}`;
+    fetch(proxyUrl + targetUrl)
+      .then(blob => blob.json())
+      .then(data => {
+        setResultState({
+          data: data,
+        });
+        setLoadingState({
+          loading: false,
+        });
+        return data;
+      })
+      .catch(e => {
+        return e;
+      });
+  };
+
+  
+  if (loadingState.loading === true) {
+    getGame();
+  }
+  if (loadingState.loading === true) {
+    return (
+      <Container component="main" maxWidth="md">
+        <Grid container spacing={3}>
+          <Grid item xs={12}></Grid>
+          <Grid item xs={2} />
+          <Grid item xs={2} />
+          <div>
+            <CircularProgress />
+            <br />
+            Loading
           </div>
-        </Toolbar>
-    </div>
-  );
+        </Grid>
+      </Container>
+    );
+  } else {
+    return (
+      <Container component="main" maxWidth="md">
+        <div>
+          <h1 className={classes.title}>{resultState.data.name}</h1>
+          <br />
+          <img
+            width="100%"
+            height="10%"
+            src={`${resultState.data.background_image}`}
+            alt="background"
+          />
+          <p> {resultState.data.description_raw}</p> <br />
+          <div>
+            <h1 className={classes.title}>Select your platform</h1>
+          </div>
+          <div>
+            <Grid container spacing={1}>
+              <Grid item xs={12}></Grid>
+              <Grid item xs={2} />
+              <Grid item xs={2} />
+              <Grid item xs={4}>
+                {resultState.data.platforms.map(platform => (
+                  <div key={platform.platform.id}>
+                    <p>
+                      <Checkbox
+                        onChange={handleCheck}
+                        name={platform.platform.name}
+                      />
+                      {platform.platform.name}
+                    </p>
+                    <br />
+                  </div>
+                ))}
+              </Grid>
+            </Grid>
+          </div>
+          <br />
+          <Container component="main" maxWidth="md">
+            <Grid container spacing={3}>
+              <Grid item xs={12}></Grid>
+              <Grid item xs={2} />
+
+              <Grid item xs={4}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="default"
+                  className={classes.submit}
+                  onClick={handleSubmit}
+                  disabled={!isValid}
+                >
+                  Add Game
+                </Button>
+              </Grid>
+              <Link to='/search'>
+              <Button className='button' color='inherit'>
+                Back to Search
+              </Button>
+            </Link>
+            </Grid>
+          </Container>
+        </div>
+      </Container>
+    );
+  }
 }

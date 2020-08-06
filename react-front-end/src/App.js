@@ -5,7 +5,7 @@ import Login from "./pages/login";
 import SignIn from "./pages/signIn";
 import Profile from "./pages/profile";
 import Platforms from "./pages/platforms";
-import Games from "./pages/addGames";
+import AddGames from "./pages/addGames";
 import Search from "./pages/search";
 import Game from "./pages/game";
 import EditGame from "./pages/editGame"; 
@@ -50,8 +50,15 @@ export default function App() {
         <Route exact path="/platforms">
           <Platforms userState={userState} setUserState={setUserState} />
         </Route>
-        <Route exact path="/games">
-          <Games userState={userState} setUserState={setUserState} />
+        <Route exact path="/addGames">
+          <AddGames    
+            userState={userState}
+            setUserState={setUserState}
+            gameState={gameState}
+            setGameState={setGameState}
+            gameSearch={gameSearch}
+            setGameSearch={setGameSearch}
+          />
         </Route>
         <Route exact path="/search">
           <Search

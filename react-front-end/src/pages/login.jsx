@@ -69,7 +69,6 @@ export default function SignIn(props) {
       .then(res => {
         const user = res.data;
         if (user.redirect === "/") {
-          // window.location = "/";
           props.setUserState({
             name: user.name,
             lastName: user.lastname,
@@ -78,31 +77,11 @@ export default function SignIn(props) {
             mail: user.email,
           });
         } else if (user.redirect === "/login") {
-          //console.log("else if ");
-          //console.log("/login", res);
-
-          // window.location = "login";
-        }
-        // const user = res.data.user;
-        // if (!user) {
-        //   alert("retrieved no data");
-        // } else {
-        //   if (user.length > 0) {
-        //     props.setUserState({
-        //       name: user[0].name,
-        //       lastName: user[0].lastname,
-        //       userId: user[0].id,
-        //       login: true,
-        //       mail: user[0].email,
-        //     });
-        //   } else {
-        //     alert("invalid data");
-        //   }
-        // }
+          }
       })
       .catch(err => {
         alert("invalid email or password");
-        // window.location = "/login";
+
       });
   };
 

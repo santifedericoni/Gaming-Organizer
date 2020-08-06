@@ -102,7 +102,7 @@ export default function app(props) {
             <Link to = '/game'>
             <img width="100%" height="55%"
               src={`${result.background_image}`}
-              onClick={() => props.setGameState({name:result.slug})}
+              onClick={() => props.setGameState({name:result.slug, id:result.id})}
             />
             </Link><br/>
           </div>
