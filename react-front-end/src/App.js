@@ -9,6 +9,7 @@ import AddGames from "./pages/addGames";
 import Search from "./pages/search";
 import Game from "./pages/game";
 import EditGame from "./pages/editGame"; 
+import MyGames from "./pages/myGames"; 
 
 import AppBar from "./components/navbar";
 
@@ -82,6 +83,16 @@ export default function App() {
         </Route>
         <Route exact path="/editgame">
           <EditGame
+            userState={userState}
+            setUserState={setUserState}
+            gameState={gameState}
+            setGameState={setGameState}
+            gameSearch={gameSearch}
+            setGameSearch={setGameSearch}
+          />
+        </Route>
+        <Route exact path="/mygames">
+          <MyGames
             userState={userState}
             setUserState={setUserState}
             gameState={gameState}
