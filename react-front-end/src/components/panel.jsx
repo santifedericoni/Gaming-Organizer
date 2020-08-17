@@ -42,12 +42,12 @@ export default function SimpleExpansionPanel(props) {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header">
+          <img src={row.photo} width="10%" height="3%"></img>
           <Typography className={classes.heading}>{row.name}</Typography>
+
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
           <Grid item xs={2}>
-          <img src={row.photo} className="avatar-img"></img>
-
             </Grid>
             <p>Description: {row.description}</p><br/>
             <Grid item xs={3}>
