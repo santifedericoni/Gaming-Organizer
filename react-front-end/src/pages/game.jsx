@@ -65,11 +65,16 @@ export default function MainPage(props) {
   } else if (isNewState.new === false){
     isNew()
         return (
-          <EditGame game={props.gameState.name}/>
+          <EditGame game={props.gameState.name}
+          userState={props.userState}
+          setUserState={props.setUserState}
+          />
         ) 
       } else {
         return (
-          <AddGames game={props.gameState.name}/>
+          <AddGames game={props.gameState.name}
+          userState={props.userState}
+          setUserState={props.setUserState}/>
         )
       }
 }

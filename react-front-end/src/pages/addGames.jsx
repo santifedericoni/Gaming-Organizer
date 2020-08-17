@@ -65,6 +65,7 @@ export default function MainPage(props) {
 
   const handleSubmit = e => {
     const data = resultState.data;
+    console.log('props,addgame',props)
     const userId = props.userState.userId
     e.preventDefault();
 

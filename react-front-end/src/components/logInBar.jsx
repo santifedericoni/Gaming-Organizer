@@ -85,6 +85,11 @@ export default function MenuAppBar(props) {
                 Add Platforms
               </Button>
             </Link>
+            <Link to='/mygames'>
+              <Button className='button' color='inherit'>
+                MyGames
+              </Button>
+            </Link>
             <Link to='/search' className='button'>
               <Button color='inherit'>search</Button>
             </Link>

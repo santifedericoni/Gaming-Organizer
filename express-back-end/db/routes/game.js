@@ -6,11 +6,13 @@ module.exports = (db) => {
     // console.log(req.body.platforms,'<platforms>')
     // console.log(req.body.data,'<game>')
     // console.log(req.body.userId,'<user>')
+    console.log(req.body.data)
     const name = req.body.data.name;
     const id_api = req.body.data.id;
     const user_id = req.body.userId;
     const genre = req.body.data.genres[0].name;
     const description = req.body.data.description_raw;
+    const photo = req.body.data.background_image;
 
 
     const insertGamePlatform = function (platforms,gameId){
@@ -52,10 +54,10 @@ module.exports = (db) => {
           });
     }
 
-    const values = [name, id_api, user_id, genre, description, false, true];
+    const values = [name, id_api, user_id, genre, description, false, true,photo];
     let query = `
-      INSERT INTO games (user_id, api_id , name , genre , description, wish_list, active)
-      VALUES ($3, $2, $1, $4, $5, $6, $7) RETURNING *;
+      INSERT INTO games (user_id, api_id , name , genre , description, wish_list, active,photo)
+      VALUES ($3, $2, $1, $4, $5, $6, $7, $8) RETURNING *;
       `;
     db.query(query, values)
       .then((data) => {
@@ -150,5 +152,22 @@ module.exports = (db) => {
         });
       }
     });
+
+    router.get('/user', (req,res) => {
+        let query = `
+        SELECT * FROM games WHERE user_id = ${req.user.id}
+        `;
+      console.log(query)
+        db.query(query)
+          .then(data => {
+            console.log(data)
+            res.json({ data });
+          })
+          .catch(err => {
+            res
+              .status(500)
+              .json({ error: err.message });
+          });
+      });
   return router;
 };
