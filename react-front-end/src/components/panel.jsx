@@ -61,6 +61,13 @@ export default function SimpleExpansionPanel(props) {
                 </Link>
               </Button>
             </Typography>
+            <Typography variant="body2" color="textSecondary" align="center">
+              <Button>
+                <Link color="inherit" to={'/editGame/'}>
+                  Delete
+                </Link>
+              </Button>
+            </Typography>
               </Grid>
           </ExpansionPanelDetails>
         </ExpansionPanel>
