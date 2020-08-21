@@ -8,6 +8,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Button } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
+import axios from 'axios';
+
 import {
   BrowserRouter as Router,
   Route,
@@ -31,8 +33,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SimpleExpansionPanel(props) {
-  console.log('hi',props)
+  const deleteGame = (val) => {
 
+    axios.post(`/api/game/delete`, { val })
+    .then((res) => {
+  });
+  window.location = `/ShowCharacterByUser`
+  }
   const classes = useStyles();
   if (props.gameState[0]){
     return (
@@ -62,10 +69,8 @@ export default function SimpleExpansionPanel(props) {
               </Button>
             </Typography>
             <Typography variant="body2" color="textSecondary" align="center">
-              <Button>
-                <Link color="inherit" to={'/editGame/'}>
-                  Delete
-                </Link>
+              <Button onClick ={(event) => deleteGame(row.id)}>
+                Delete
               </Button>
             </Typography>
               </Grid>
