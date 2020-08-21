@@ -55,9 +55,11 @@ export default function SimpleExpansionPanel(props) {
             <p>Description: {row.description}</p><br/>
             <Grid item xs={3}>
             <Typography variant="body2" color="textSecondary" align="center">
-              <Link color="inherit" to={'/editGame/' + row.id}>
-                Full View
-              </Link>{' '}
+              <Button>
+                <Link color="inherit" to={'/editGame/'}>
+                  Edit Game
+                </Link>
+              </Button>
             </Typography>
               </Grid>
           </ExpansionPanelDetails>
