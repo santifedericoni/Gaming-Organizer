@@ -43,3 +43,25 @@ In the browser, you can click on the button and see the data get loaded.
 If this doesn't work, please message us: 
 @[Santy](https://github.com/santifedericoni) or @[Jason](https://github.com/jpark-dev)!!
 
+## Screenshots
+
+Create an account
+![Sing Up](https://github.com/santifedericoni/Gaming-Organizer/blob/master/screenshots/01-sign%20up.PNG)
+
+Create Character Main Page
+![Log in](https://github.com/santifedericoni/Gaming-Organizer/blob/master/screenshots/02-login.PNG)
+
+Create Character Main Page
+![Edit Profile](https://github.com/santifedericoni/Gaming-Organizer/blob/master/screenshots/03-edit%20profile.PNG)
+
+Create Character Main Page
+![Search Game](https://github.com/santifedericoni/Gaming-Organizer/blob/master/screenshots/04-searchGame.PNG)
+
+Create Character Main Page
+![Add Game](https://github.com/santifedericoni/Gaming-Organizer/blob/master/screenshots/05-addGame.PNG)
+
+Create Character Main Page
+![Edit Game](https://github.com/santifedericoni/Gaming-Organizer/blob/master/screenshots/06-editGame.PNG)
+
+Create Character Main Page
+![My Games](https://github.com/santifedericoni/Gaming-Organizer/blob/master/screenshots/07-MyGames.PNG)
