@@ -52,9 +52,7 @@ export default function SimpleExpansionPanel(props) {
             id="panel1a-header">
           {/* <img src={row.photo} width="10%" height="3%"></img> */}
           <Avatar alt="Remy Sharp" src={row.photo} />
-
           <Typography className={classes.heading}>{row.name}</Typography>
-
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
           <Grid item xs={2}>
