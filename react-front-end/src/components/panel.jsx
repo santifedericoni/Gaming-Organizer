@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Button } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
+import Avatar from '@material-ui/core/Avatar';
 import {
   BrowserRouter as Router,
   Route,
@@ -42,7 +43,9 @@ export default function SimpleExpansionPanel(props) {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header">
-          <img src={row.photo} width="10%" height="3%"></img>
+          {/* <img src={row.photo} width="10%" height="3%"></img> */}
+          <Avatar alt="Remy Sharp" src={row.photo} />
+
           <Typography className={classes.heading}>{row.name}</Typography>
 
           </ExpansionPanelSummary>
