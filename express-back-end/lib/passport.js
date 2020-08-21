@@ -8,13 +8,11 @@ module.exports = (db, app) => {
 
   // serialize user data with session only once when logged in
   passport.serializeUser((user, done) => {
-    //console.log("serialize: ", user);
     done(null, user.email);
   });
 
   // deserialize user data with session 
   passport.deserializeUser((id, done) => {
-    //console.log("deserialize: ", id);
 
     let query = `
             SELECT * FROM users WHERE email = $1;
@@ -22,7 +20,6 @@ module.exports = (db, app) => {
 
     db.query(query, [id])
       .then(data => {
-        //console.log(data.rows[0]);
         done(null, data.rows[0]);
       })
       .catch(err => {

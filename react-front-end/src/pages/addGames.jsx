@@ -65,7 +65,6 @@ export default function MainPage(props) {
 
   const handleSubmit = e => {
     const data = resultState.data;
-    console.log('props,addgame',props)
     const userId = props.userState.userId
     e.preventDefault();
 
@@ -78,7 +77,6 @@ export default function MainPage(props) {
 
 
   const getGame = () => {
-    console.log(props.game)
     var proxyUrl = "https://cors-anywhere.herokuapp.com/",
       targetUrl = `https://api.rawg.io/api/games/${props.game}`;
     fetch(proxyUrl + targetUrl)

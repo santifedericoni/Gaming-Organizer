@@ -3,10 +3,6 @@ const router = express.Router();
 
 module.exports = (db) => {
   router.post('/addList', (req, res) => {
-    // console.log(req.body.platforms,'<platforms>')
-    // console.log(req.body.data,'<game>')
-    // console.log(req.body.userId,'<user>')
-    console.log(req.body.data)
     const name = req.body.data.name;
     const id_api = req.body.data.id;
     const user_id = req.body.userId;
@@ -71,9 +67,6 @@ module.exports = (db) => {
   });
 
   router.post('/addWishList', (req, res) => {
-       // console.log(req.body.platforms,'<platforms>')
-    // console.log(req.body.data,'<game>')
-    // console.log(req.body.userId,'<user>')
     const name = req.body.data.name;
     const id_api = req.body.data.id;
     const user_id = req.body.userId;
@@ -157,10 +150,8 @@ module.exports = (db) => {
         let query = `
         SELECT * FROM games WHERE user_id = ${req.user.id}
         `;
-      console.log(query)
         db.query(query)
           .then(data => {
-            console.log(data)
             res.json({ data });
           })
           .catch(err => {

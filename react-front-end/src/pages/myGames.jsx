@@ -14,7 +14,6 @@ import {
 const MyGames = (props) => {
 
   const [gameState , setGameState] = React.useState([])
-  console.log(props.userState.userId)
   const getCharacterById = () => {
     axios.get(`/api/game/user` )
       .then((response) => {
