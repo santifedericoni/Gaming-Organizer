@@ -37,9 +37,7 @@ export default function MainPage(props) {
       margin: "0 0 0 30%",
     },
   }));
-
   const classes = useStyles();
-
   const handleCheck = e => {
     const platformName = e.target.name;
     const isChecked = e.target.checked;
@@ -94,7 +92,6 @@ export default function MainPage(props) {
       });
   };
 
-  
   if (loadingState.loading === true) {
     getGame();
   }

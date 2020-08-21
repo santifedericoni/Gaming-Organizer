@@ -30,7 +30,7 @@ module.exports = (db) => {
         .catch((err) => {
         })
     }
-
+    
     const getPlatformsID = function (gameID){
         let insertPlatform = ''
         for (let i= 0; i < req.body.platforms.length; i++ ){
@@ -168,7 +168,6 @@ module.exports = (db) => {
         WHERE id= $1;`
         db.query(query, values)
         .then((result) => {
-    
         })
         .catch(err => {
           res

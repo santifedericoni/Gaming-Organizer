@@ -67,7 +67,6 @@ export default function MainPage(props) {
     const data = resultState.data;
     const userId = props.userState.userId
     e.preventDefault();
-
     if (!isValid) {
       alert("Please select at least one platform to be added.");
     } else {
@@ -95,7 +94,6 @@ export default function MainPage(props) {
       });
   };
 
-  
   if (loadingState.loading === true) {
     getGame();
   }

@@ -14,8 +14,6 @@ app.use(session({
 
 const passport = require('passport'), LocalStrategy = require('passport-local').Strategy;
 
-
-
 app.get('/', function (req, res, next) {
   if (req.session.num === undefined) {
     req.session.num = 1;

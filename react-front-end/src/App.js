@@ -32,11 +32,9 @@ export default function App() {
     name: "",
   });
 
-
   return (
     <Router>
       <AppBar userState={userState} setUserState={setUserState} />
-      {/* <body > */}
       <Switch>
         <Route exact path="/" component={MainPage} />
         <Route exact path="/login">

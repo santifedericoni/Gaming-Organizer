@@ -22,7 +22,6 @@ export default function MainPage(props) {
     },
     []
   );
-//here when i get if the game is new or not, i should get the platforms in case is an edit
   const isNew = () => {
     let gameData = props.gameState;
     let userId = props.userState.userId

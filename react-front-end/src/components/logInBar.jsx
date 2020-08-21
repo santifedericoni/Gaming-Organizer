@@ -74,9 +74,6 @@ export default function MenuAppBar(props) {
         <FormGroup></FormGroup>
         <AppBar position='static'>
           <Toolbar>
-            {/* <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon> test</MenuIcon> 
-          </IconButton> */}
             <Typography variant='h6' className={classes.title}>
               Game Organizer
             </Typography>
