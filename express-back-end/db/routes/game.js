@@ -169,5 +169,21 @@ module.exports = (db) => {
               .json({ error: err.message });
           });
       });
+
+      router.post("/delete", (req, res) => {
+        const values = [req.body.val];
+        const query = `UPDATE characters
+        SET active = false
+        WHERE id= $1;`
+        db.query(query, values)
+        .then((result) => {
+    
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
+      })
   return router;
 };
